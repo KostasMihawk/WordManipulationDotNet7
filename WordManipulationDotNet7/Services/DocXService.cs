@@ -444,16 +444,16 @@ namespace WordManipulationDotNet7.Services
             switch (signature)
             {
                 case Signature.paralavon:
-                    AddToParagraph(paragraph, $".. παραλαβ.....                                             .. Δικαστικ... Επιμελ...... ");
+                    AddToParagraph(paragraph, $".. παραλαβ.....                                             η Δικαστική Επιμελήτρια ");
                     break;
                 case Signature.paredros:
-                    AddToParagraph(paragraph, $".. παραλαβ..... Πάρεδρος                                            .. Δικαστικ... Επιμελ...... ");
+                    AddToParagraph(paragraph, $".. παραλαβ..... Πάρεδρος                                            η Δικαστική Επιμελήτρια ");
                     break;
                 case Signature.ypallilos:
-                    AddToParagraph(paragraph, $".. παραλαβ..... εξουσιοδοτημεν.... Υπάλληλος                       .. Δικαστικ... Επιμελ...... ");
+                    AddToParagraph(paragraph, $".. παραλαβ..... εξουσιοδοτημεν.... Υπάλληλος                       η Δικαστική Επιμελήτρια ");
                     break;
                 case Signature.genericMartyras:
-                    AddToParagraph(paragraph, $".. .....αρ...........                                                                     .. Δικαστικ... Επιμελ...... ");
+                    AddToParagraph(paragraph, $".. .....αρ...........                                                                     η Δικαστική Επιμελήτρια ");
                     break;
                 default:
                     break;

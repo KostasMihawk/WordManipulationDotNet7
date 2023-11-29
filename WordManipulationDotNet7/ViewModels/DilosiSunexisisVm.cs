@@ -18,7 +18,7 @@ namespace WordManipulationDotNet7.ViewModels
         [Display(Name = "Γένος")]
         public Gender Gender { get; set; }
 
-        [Display(Name = "966")]
+        [Display(Name = "Άρθρο 966")]
         public bool Ar8ro966 { get; set; }
 
         [Display(Name = "Ημερομηνία Παραγγελίας")]
