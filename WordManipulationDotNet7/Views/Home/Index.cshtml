@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Αρχική";
+}
+
+<h2>Αρχική</h2>
+
+
+<style>
+    .mycontainer {
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+        justify-content: center;
+    }
+</style>
+
+<div class="mycontainer">
+    @Html.ActionLink("Πρόσκληση Δανειστών", "CreateLoanerInvitation", "LoanerInvitation", null, new { @class = "btn btn-primary", @style = "color:white" })
+    @Html.ActionLink("Εκθέσεις Εντολής Συνέχισης Πληστειριασμού", "CreateSunexisiPlistiriasmou", "SunexisiPlistriasmou", null, new { @class = "btn btn-primary", @style = "color:white" })
+    @Html.ActionLink("Εκθέσεις Εντολής Συνέχισης Πληστειριασμού  NEW", "CreateDilosi", "DilosiSunexisisNew", null, new { @class = "btn btn-primary", @style = "color:white" })
+    @Html.ActionLink("Κατασχετήρια", "CreateKatasxetirio", "Katasxetiria", null, new { @class = "btn btn-primary", @style = "color:white" })
+
+</div>

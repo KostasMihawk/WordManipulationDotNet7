@@ -1,0 +1,101 @@
+﻿@using WordManipulationDotNet7.Models
+@using WordManipulationDotNet7.Services
+@model WordManipulationDotNet7.ViewModels.SunexisiPlistirasmouViewmodel
+
+@{
+    ViewBag.Title = "ΔΗΛΩΣΗ ΣΥΝΕΧΙΣΗΣ ΠΛΗΣΤΕΙΡΙΑΣΜΟΥ";
+    var Generator = new DropDownGenerator();
+}
+
+<h2>ΔΗΛΩΣΗ ΣΥΝΕΧΙΣΗΣ ΠΛΗΣΤΕΙΡΙΑΣΜΟΥ</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Notary, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Notary", new SelectList(Generator.GetNotaries(), "Id", "Name", 1), htmlAttributes: new { @class = "form-control", @style = "width:300px" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DebtorForSunexisi, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("DebtorForSunexisi", new SelectList(Generator.GetDebtorsForSunexisi(), "Id", "Name", 1), htmlAttributes: new { @class = "form-control", @style = "width:300px" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Zone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Zone", new SelectList(Generator.GetZones(), "Id", "Name", 1), htmlAttributes: new { @class = "form-control", @style = "width:300px" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CaseNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CaseNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CaseNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Debtor, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Debtor, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Debtor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Epispeudon, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Epispeudon, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Epispeudon, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ar8ro966, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Ar8ro966)
+                    @Html.ValidationMessageFor(model => model.Ar8ro966, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Δημιουργία" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Πίσω στην αρχική οθόνη", "Arxiki", "Home")
+</div>
