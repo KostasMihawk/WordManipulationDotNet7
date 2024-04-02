@@ -132,6 +132,15 @@ namespace WordManipulationDotNet7.Models
                 Description = "που εδρεύει στην οδό Ακαδημίας 41,",
                 GiaSunexisi = "της συμβολαιογράφου Αθηνών Ανδριανοπούλου Ν. Δήμητρας "
             });
+            list.Add(new Attorney
+            {
+                Id = id++,
+                Name = "Βασιλική Θ. Παπαγεωργίου",
+                City = "Πατρών",
+                Pronoun = "της",
+                Description = "που εδρεύει στην οδό Κανακάρη αρ. 149-153,",
+                GiaSunexisi = "της συμβολαιογράφου Πατρών Βασιλικής Θ. Παπαγεωργίου"
+            });
             return list;
         }
 
