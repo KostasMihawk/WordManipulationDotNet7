@@ -294,6 +294,22 @@ namespace WordManipulationDotNet7.Models
                 MAEDAP = "QQUANT MASTER SERVICER ΜΟΝΟΠΡΟΣΩΠΗ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ ΔΙΑΧΕΙΡΙΣΗΣ ΑΠΑΙΤΗΣΕΩΝ ΑΠΟ ΔΑΝΕΙΑ ΚΑΙ ΠΙΣΤΩΣΕΙΣ",
                 MAEDAPAdress = "στο Μαρούσι Αττικής, επί της Λεωφόρου Κηφισίας αριθ. 66, με ΑΦΜ 800858891  της Δ.Ο.Υ. ΦΑΕ Αθηνών και με αριθ. ΓΕΜΗ 143190101000"
             });
+            list.Add(new Fund
+            {
+                Id = id++,
+                Name = "ORION X SECURITISATION DESIGNATED ACTIVITY COMPANY",
+                Description = "με έδρα το Δουβλίνο Ιρλανδίας",
+                MAEDAP = "CEPAL HELLAS ΧΡΗΜΑΤΟΟΙΚΟΝΟΜΙΚΕΣ ΥΠΗΡΕΣΙΕΣ ΜΟΝΟΠΡΟΣΩΠΗ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ ΔΙΑΧΕΙΡΙΣΗΣ ΑΠΑΙΤΗΣΕΩΝ ΑΠΟ ΔΑΝΕΙΑ ΚΑΙ ΠΙΣΤΩΣΕΙΣ",
+                MAEDAPAdress = "στην Νέα Σμύρνη Αττικής, επί της Λεωφόρου Συγγρού αρ. 209-211, Α.Φ.Μ. 800715056, Δ.Ο.Υ. Φ.Α.Ε. Πειραιά, με αρ. ΓΕΜΗ 138019601000"
+            });
+            list.Add(new Fund
+            {
+                Id = id++,
+                Name = "COSMOS SECURITISATION DESIGNATED ACTIVITY COMPANY",
+                Description = "με έδρα το Δουβλίνο Ιρλανδίας",
+                MAEDAP = "CEPAL HELLAS ΧΡΗΜΑΤΟΟΙΚΟΝΟΜΙΚΕΣ ΥΠΗΡΕΣΙΕΣ ΜΟΝΟΠΡΟΣΩΠΗ ΑΝΩΝΥΜΗ ΕΤΑΙΡΕΙΑ ΔΙΑΧΕΙΡΙΣΗΣ ΑΠΑΙΤΗΣΕΩΝ ΑΠΟ ΔΑΝΕΙΑ ΚΑΙ ΠΙΣΤΩΣΕΙΣ",
+                MAEDAPAdress = "στην Νέα Σμύρνη Αττικής, επί της Λεωφόρου Συγγρού αρ. 209-211, Α.Φ.Μ. 800715056, Δ.Ο.Υ. Φ.Α.Ε. Πειραιά, με αρ. ΓΕΜΗ 138019601000"
+            });
             return list;
         }
         public List<Attorney> GetAttorneysList()
@@ -522,6 +538,37 @@ namespace WordManipulationDotNet7.Models
             });
             list.Add(new EkthesiEpidoshsModel
             {
+                Location = "Στο Αμαρούσιο Αττικής",
+                Name = "Δ.Ο.Υ. (Εφοριες) Αμαρουσιου",
+                Perigrafh = "προς τον προϊστάμενο της ΔΟΥ Αμαρουσίου,",
+                Praxh = null,
+                Signature = Signature.ypallilos,
+                HasKleisimo = Kleisimo.denExei,
+                FusikoProswpo = false,
+                ZoneB = true
+            }); 
+            list.Add(new EkthesiEpidoshsModel
+            {
+                Location = "Στην Νίκαια Αττικής",
+                Name = "Δ.Ο.Υ. (Εφοριες) Νίκαιας",
+                Perigrafh = "προς τον προϊστάμενο της ΔΟΥ Νίκαιας,",
+                Praxh = null,
+                Signature = Signature.ypallilos,
+                HasKleisimo = Kleisimo.denExei,
+                FusikoProswpo = false
+            });
+            list.Add(new EkthesiEpidoshsModel
+            {
+                Location = "Στο Αιγάλεω Αττικής",
+                Name = "Δ.Ο.Υ. (Εφοριες) Αιγάλεω",
+                Perigrafh = "προς τον προϊστάμενο της ΔΟΥ Αιγάλεω,",
+                Praxh = null,
+                Signature = Signature.ypallilos,
+                HasKleisimo = Kleisimo.denExei,
+                FusikoProswpo = false
+            });
+            list.Add(new EkthesiEpidoshsModel
+            {
                 Location = "Στην Αθήνα",
                 Name = "ΚΕΒΕΙΣ",
                 Perigrafh = "προς τον προϊστάμενο του ΚΕ.Β.ΕΙΣ,",
@@ -529,7 +576,38 @@ namespace WordManipulationDotNet7.Models
                 Signature = Signature.ypallilos,
                 HasKleisimo = Kleisimo.denExei,
                 FusikoProswpo = false
-            }); list.Add(new EkthesiEpidoshsModel
+            });
+            list.Add(new EkthesiEpidoshsModel
+            {
+                Location = "Στην Αθήνα",
+                Name = "ΔΗΜΟΣ ΑΘΗΝΑΙΩΝ",
+                Perigrafh = "προς τον ΔΗΜΟ ΑΘΗΝΑΙΩΝ,",
+                Praxh = null,
+                Signature = Signature.ypallilos,
+                HasKleisimo = Kleisimo.denExei,
+                FusikoProswpo = false
+            });
+            list.Add(new EkthesiEpidoshsModel
+            {
+                Location = "Στο Περιστέρι Αττικής",
+                Name = "ΔΗΜΟΣ ΠΕΡΙΣΤΕΡΙΟΥ",
+                Perigrafh = "προς τον ΔΗΜΟ ΠΕΡΙΣΤΕΡΙΟΥ,",
+                Praxh = null,
+                Signature = Signature.ypallilos,
+                HasKleisimo = Kleisimo.denExei,
+                FusikoProswpo = false
+            });
+            list.Add(new EkthesiEpidoshsModel
+            {
+                Location = "Στον Πειραιά Αττικής",
+                Name = "ΔΗΜΟΣ ΠΕΙΡΑΙΑ",
+                Perigrafh = "προς τον ΔΗΜΟ ΠΕΙΡΑΙΑ,",
+                Praxh = null,
+                Signature = Signature.ypallilos,
+                HasKleisimo = Kleisimo.denExei,
+                FusikoProswpo = false
+            });
+            list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στον Πειραιά",
                 Name = "Δ.Ο.Υ. (Εφοριες) Ε Πειραιά",
