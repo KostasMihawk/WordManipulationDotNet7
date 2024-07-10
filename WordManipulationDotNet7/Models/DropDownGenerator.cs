@@ -584,6 +584,15 @@ namespace WordManipulationDotNet7.Models
                 Signature = Signature.ypallilos,
                 HasKleisimo = Kleisimo.denExei,
                 FusikoProswpo = false
+            }); list.Add(new EkthesiEpidoshsModel
+            {
+                Location = "Στον Ταύρο Αττικής",
+                Name = "ΚΕΒΕΙΣ",
+                Perigrafh = "προς τον προϊστάμενο του ΚΕ.ΦΟ.Δ.Ε.,",
+                Praxh = null,
+                Signature = Signature.ypallilos,
+                HasKleisimo = Kleisimo.denExei,
+                FusikoProswpo = false
             });
             list.Add(new EkthesiEpidoshsModel
             {
