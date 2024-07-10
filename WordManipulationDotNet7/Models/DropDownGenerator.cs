@@ -587,7 +587,7 @@ namespace WordManipulationDotNet7.Models
             }); list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στον Ταύρο Αττικής",
-                Name = "ΚΕΒΕΙΣ",
+                Name = "ΚΕΦΟΔΕ",
                 Perigrafh = "προς τον προϊστάμενο του ΚΕ.ΦΟ.Δ.Ε.,",
                 Praxh = null,
                 Signature = Signature.ypallilos,
