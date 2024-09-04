@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ionic.Zip;
-using Microsoft.VisualBasic.FileIO;
 using System.IO;
 using WordManipulationDotNet7.Models;
 using WordManipulationDotNet7.Services;
@@ -11,70 +10,55 @@ namespace WordManipulationDotNet7.Controllers
     public class DilosiSunexisisNew : Controller
     {
         private readonly DocXService _docXService;
+
         public DilosiSunexisisNew(DocXService docXService)
         {
             _docXService = docXService;
         }
+
         public IActionResult CreateDilosi()
         {
             return View();
         }
-        [HttpPost()]
+
+        [HttpPost]
         public ActionResult CreateDilosi(DilosiSunexisisVm vm)
         {
-            DropDownGenerator generator = new DropDownGenerator();
-            Summary s = new Summary(_docXService);
-            DilosiSunexisisModel model = new DilosiSunexisisModel(vm);
+            var generator = new DropDownGenerator();
+            var summary = new Summary(_docXService);
+            var model = new DilosiSunexisisModel(vm);
+            var zipFiles = generator.GetZipFiles();
 
-            var ZipFiles = new List<EkthesiEpidoshsModel>();
-            ZipFiles = generator.GetZipFiles();
-            using (MemoryStream stream = new MemoryStream())
+            using (var stream = new MemoryStream())
             {
-                using (ZipFile zip = new ZipFile(System.Text.Encoding.UTF8))
+                using (var zip = new ZipFile(System.Text.Encoding.UTF8))
                 {
                     zip.AlternateEncodingUsage = ZipOption.AsNecessary;
-                    foreach (var doc in ZipFiles)
+                    foreach (var doc in zipFiles)
                     {
-
                         model.fillZipEntries(doc);
-                        if (doc.Name.Contains("Εφοριες"))
-                        {
-                            zip.AddEntry("Εφορίες/" + doc.Name + ".docx", s.CreateDilosiSunexisis(model));
-                        }
-                        else if (doc.Name.Contains("Cepal"))
-                        {
-                            zip.AddEntry("Cepal/" + doc.Name + ".docx", s.CreateDilosiSunexisis(model));
-                        }
-                        else if (doc.Name.Contains("doValue"))
-                        {
-                            zip.AddEntry("doValue/" + doc.Name + ".docx", s.CreateDilosiSunexisis(model));
-                        }
-                        else if (doc.Name.Contains("Intrum"))
-                        {
-                            zip.AddEntry("Intrum/" + doc.Name + ".docx", s.CreateDilosiSunexisis(model));
-                        }
-                        else if (doc.Name.Contains("QQuant"))
-                        {
-                            zip.AddEntry("QQuant/" + doc.Name + ".docx", s.CreateDilosiSunexisis(model));
-                        }
-                        else if (doc.Name.Contains("ALfa"))
-                        {
-                            zip.AddEntry("Αλφα/" + doc.Name + ".docx", s.CreateDilosiSunexisis(model));
-                        }
-                        else if (doc.Name.Contains("pqh"))
-                        {
-                            zip.AddEntry("pqh/" + doc.Name + ".docx", s.CreateDilosiSunexisis(model));
-                        }
-                        else
-                        {
-                            zip.AddEntry(doc.Name + ".docx", s.CreateDilosiSunexisis(model));
-                        }
+                        var entryName = GetEntryName(doc);
+                        zip.AddEntry(entryName, summary.CreateDilosiSunexisis(model));
                     }
                     zip.Save(stream);
                 }
-                return File(stream.ToArray(), "application/zip", vm.Debtor + ".zip");
+                return File(stream.ToArray(), "application/zip", $"{vm.Debtor}.zip");
             }
+        }
+
+        private string GetEntryName(EkthesiEpidoshsModel doc)
+        {
+            return doc.Name switch
+            {
+                var name when name.Contains("Εφοριες") => $"Εφορίες/{name}.docx",
+                var name when name.Contains("Cepal") => $"Cepal/{name}.docx",
+                var name when name.Contains("doValue") => $"doValue/{name}.docx",
+                var name when name.Contains("Intrum") => $"Intrum/{name}.docx",
+                var name when name.Contains("QQuant") => $"QQuant/{name}.docx",
+                var name when name.Contains("ALfa") => $"Αλφα/{name}.docx",
+                var name when name.Contains("pqh") => $"pqh/{name}.docx",
+                _ => $"{doc.Name}.docx",
+            };
         }
     }
 }
-
