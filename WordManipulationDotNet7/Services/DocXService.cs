@@ -479,7 +479,7 @@ namespace WordManipulationDotNet7.Services
             return doc;
         }
 
-        public DocX ParagrafosAkrivesAdigrafouPraxisDaneistwn(DocX doc, Gender gender, string defender, string documentNumber, string ofeiletis, bool isPinakas, bool IsAnaplistiriasmos, bool IsEikozomenon)
+        public DocX ParagrafosAkrivesAdigrafouPraxisDaneistwn(DocX doc, Gender gender, string defender, string documentNumber, string ofeiletis, bool isPinakas, bool IsAnaplistiriasmos, bool IsEikozomenon, string AttorneyNoun)
         {
             Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
@@ -499,7 +499,7 @@ namespace WordManipulationDotNet7.Services
             {
                 AddToParagraphBoldText(paragraph, $"{documentNumber} ΠΡΑΞΗΣ {PraxiHPinakas(isPinakas)} ");
             }
-            AddToParagraph(paragraph, $"της ως άνω συμβολαιογράφου κατά {EpiloghArthrouBasiGenous(gender)}{ofeiletis}, για να λάβει γνώση και για τις νόμιμες συνέπειες.");
+            AddToParagraph(paragraph, $"{AttorneyNoun} ως άνω συμβολαιογράφου κατά {EpiloghArthrouBasiGenous(gender)}{ofeiletis}, για να λάβει γνώση και για τις νόμιμες συνέπειες.");
             return doc;
         }
 
@@ -613,7 +613,7 @@ namespace WordManipulationDotNet7.Services
                 AddHeaderToDocument(doc, null);
                 CreateIntroParagraphGiaPraxiDaneistwn(doc, model.Location, model.Address, model.IsFusikoProsopo, model.Baillif.Name, model.Notary.Description);
                 ParagrapfosProsOfeilethPraxisDaneistwn(doc, model.Gender, model.IsFusikoProsopo, model.Debtor, model.Upiresia);
-                ParagrafosAkrivesAdigrafouPraxisDaneistwn(doc, model.Gender, model.Upiresia, model.CaseNumber, model.Debtor, model.IsTable, model.IsAnaplistiriasmos, model.IsEikazomenon);
+                ParagrafosAkrivesAdigrafouPraxisDaneistwn(doc, model.Gender, model.Upiresia, model.CaseNumber, model.Debtor, model.IsTable, model.IsAnaplistiriasmos, model.IsEikazomenon, model.Notary.Pronoun);
                 ParagrafosPraxis(doc, model.PraxiUpiresias, model.KeimenoPraxis);
                 ParagrafosSuntaxisEkthesis(doc);
                 ParagrafosUpografis(doc, model.PraxiUpiresias, model.IsFusikoProsopo, model.Signature);
