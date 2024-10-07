@@ -502,8 +502,15 @@ namespace WordManipulationDotNet7.Services
             AddToParagraph(paragraph, $"{AttorneyNoun} ως άνω συμβολαιογράφου κατά {EpiloghArthrouBasiGenous(gender)}{ofeiletis}, για να λάβει γνώση και για τις νόμιμες συνέπειες.");
             return doc;
         }
+        private string ProNounChange(string pronoun)
+        {
+            if (pronoun == "της") return "την";
+            else if (pronoun == "του") return "τον";
+            else return pronoun;
 
-        public DocX CreateIntroParagraphDilosiSunexisis(DocX doc, string location, string locationUpiresias, bool isFusikoProsopo, string DateOfConfiscation, string NotaryDescription, string DateOfOrder, string NotaryName, string NotaryCity)
+        }
+
+        public DocX CreateIntroParagraphDilosiSunexisis(DocX doc, string location, string locationUpiresias, bool isFusikoProsopo, string DateOfConfiscation, string NotaryDescription, string DateOfOrder, string NotaryName, string NotaryCity, string NotaryPronoun)
         {
             Paragraph introParagraph = doc.InsertParagraph("", false, Formatting);
             introParagraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
@@ -521,7 +528,7 @@ namespace WordManipulationDotNet7.Services
             AddToParagraph(introParagraph, ", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «ΝΕΟΣ ΚΩΔΙΚΑΣ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Ζωοδόχου Πηγής αρ. 12, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, μετά την έγγραφη παραγγελία ");
             AddToParagraph(introParagraph, "που μου δόθηκε στις ");
             AddToParagraphBoldText(introParagraph, DateOfOrder);
-            AddToParagraph(introParagraph, " από την Συμβολαιογράφο " + NotaryCity + " ");
+            AddToParagraph(introParagraph, " από "+ ProNounChange(NotaryPronoun) + " Συμβολαιογράφο " + NotaryCity + " ");
             AddToParagraphBoldText(introParagraph, NotaryName + " ");
             AddToParagraph(introParagraph, NotaryDescription + " ως υπάλληλο του πλειστηριασμού,");
             return doc;
@@ -547,14 +554,14 @@ namespace WordManipulationDotNet7.Services
             return doc;
         }
 
-        public DocX ParagraphAkrivesAdigrafoDilosi(DocX doc, Gender gender, string documentNumber, string sumbolaiografos, string ofeileths, bool Article, string DateOfConfiscation, string FundName, string FundDesc, string MaedapName, string MaedapAdress)
+        public DocX ParagraphAkrivesAdigrafoDilosi(DocX doc, Gender gender, string documentNumber, string sumbolaiografos, string ofeileths, bool Article, string DateOfConfiscation, string FundName, string FundDesc, string MaedapName, string MaedapAdress, string NotaryPronoun)
         {
             Paragraph paragraph = doc.InsertParagraph("", false, Formatting);            
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;
             AddToParagraph(paragraph, $"ακριβές αντίγραφο της υπ΄ αριθμόν");
             AddToParagraphBoldText(paragraph, $" {documentNumber} ΠΡΑΞΗΣ ΔΗΛΩΣΗΣ-ΕΝΤΟΛΗΣ ΣΥΝΕΧΙΣΗΣ ΠΛΕΙΣΤΗΡΙΑΣΜΟΥ ΑΚΙΝΗΤΟΥ ΚΑΤΑ ΤΟ ΑΡΘΡΟ " + ArthroSunexisisPlistiriasmou(Article) + " ΤΟΥ Κ.ΠΟΛ.Δ.,");
-            AddToParagraph(paragraph, $" των πράξεων της ως άνω Συμβολαιογράφου, για πλειστηριασμό που θα διενεργηθεί στις ");
+            AddToParagraph(paragraph, $" των πράξεων {NotaryPronoun} ως άνω Συμβολαιογράφου, για πλειστηριασμό που θα διενεργηθεί στις ");
             AddToParagraphBoldAndUnderlinedText(paragraph, DateOfConfiscation);
             AddToParagraph(paragraph, " επισπευδόμενης από την εταιρεία ειδικού σκοπού τιτλοποίησης με την επωνυμία ");
             AddToParagraphBoldText(paragraph, "«" + FundName + "»");
@@ -596,9 +603,9 @@ namespace WordManipulationDotNet7.Services
             {
                 CreatePricingAndNameTable(doc, model.Zone, model.IsFusikoProsopo, model.ZoneB);
                 AddHeaderToDocument(doc, null);
-                CreateIntroParagraphDilosiSunexisis(doc, model.Location, model.Address, model.IsFusikoProsopo, model.DateOfConfiscation, model.Notary.Description, model.DateOfOrder, model.Notary.Name, model.Notary.City);
+                CreateIntroParagraphDilosiSunexisis(doc, model.Location, model.Address, model.IsFusikoProsopo, model.DateOfConfiscation, model.Notary.Description, model.DateOfOrder, model.Notary.Name, model.Notary.City, model.Notary.Pronoun);
                 EpispeudonParagraphDilosi(doc, model.IsFusikoProsopo, model.Gender, model.Debtor, model.Upiresia);
-                ParagraphAkrivesAdigrafoDilosi(doc, model.Gender, model.CaseNumber, model.Notary.Name, model.Debtor, model.Ar8ro966, model.DateOfConfiscation, model.Fund.Name, model.Fund.Description, model.Fund.MAEDAP, model.Fund.MAEDAPAdress);
+                ParagraphAkrivesAdigrafoDilosi(doc, model.Gender, model.CaseNumber, model.Notary.Name, model.Debtor, model.Ar8ro966, model.DateOfConfiscation, model.Fund.Name, model.Fund.Description, model.Fund.MAEDAP, model.Fund.MAEDAPAdress, model.Notary.Pronoun);
                 ParagrafosPraxis(doc, model.PraxiUpiresias, model.KeimenoPraxis);
                 ParagrafosSuntaxisEkthesis(doc);
                 ParagrafosUpografis(doc, model.PraxiUpiresias, model.IsFusikoProsopo, model.Signature);
