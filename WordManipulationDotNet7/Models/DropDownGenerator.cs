@@ -604,7 +604,7 @@ namespace WordManipulationDotNet7.Models
             {
                 Location = "Στην Αθήνα",
                 Name = "ΚΕΒΕΙΣ",
-                Perigrafh = "προς τον προϊστάμενο του ΚΕ.Β.ΕΙΣ,",
+                Perigrafh = "προς τον προϊστάμενο του ΚΕ.Β.ΕΙΣ ΑΤΤΙΚΗΣ,",
                 Praxh = null,
                 Signature = Signature.ypallilos,
                 HasKleisimo = Kleisimo.denExei,
