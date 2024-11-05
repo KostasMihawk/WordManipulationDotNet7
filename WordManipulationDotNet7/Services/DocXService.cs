@@ -130,7 +130,7 @@ namespace WordManipulationDotNet7.Services
         }
 
 
-        public DocX CreatePricingAndNameTable(DocX doc, Zone zone, bool isFusikoProswpo, bool ZoneB)
+        public DocX CreatePricingAndNameTable(DocX doc, Zone zone, bool isFusikoProswpo, bool? ZoneB)
         {
             Table t = doc.AddTable(7, 2);
             doc.MarginBottom = 0;
@@ -161,7 +161,7 @@ namespace WordManipulationDotNet7.Services
                 t.Rows[6].Cells[0].Paragraphs.First().Append("email: odee.pmz@gmail.com").Font(fontFamily).Alignment = Alignment.center;
                 t.Rows[6].Cells[1].Paragraphs.First().Append("ΣΥΝΟΛΟ: " + zone.TaxedValue.ToString("F")).Font(fontFamily);
             }
-            else if (ZoneB)
+            else if (ZoneB == true)
             {
                 t.Rows[0].Cells[0].Paragraphs.First().Append(" ΝΕΟΣ ΚΩΔΙΚΑΣ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
                 t.Rows[0].Cells[1].Paragraphs.First().Append("Ζώνη: Β").Font(fontFamily);
@@ -177,6 +177,23 @@ namespace WordManipulationDotNet7.Services
                 t.Rows[5].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
                 t.Rows[6].Cells[0].Paragraphs.First().Append("email: odee.pmz@gmail.com").Font(fontFamily).Alignment = Alignment.center;
                 t.Rows[6].Cells[1].Paragraphs.First().Append("ΣΥΝΟΛΟ: 68.20").Font(fontFamily);
+            }
+            else if(ZoneB == null)
+            {
+                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΝΕΟΣ ΚΩΔΙΚΑΣ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
+                t.Rows[0].Cells[1].Paragraphs.First().Append("Ζώνη: Γ").Font(fontFamily);
+                t.Rows[1].Cells[0].Paragraphs.First().Append("Έδρα: Ζωοδόχου Πηγής αρ. 12 - Αθήνα 10681").Font(fontFamily).Alignment = Alignment.center;
+                t.Rows[1].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
+                t.Rows[2].Cells[0].Paragraphs.First().Append("Α.Φ.Μ.: 996910057 - Δ.Ο.Υ. Δ' Αθηνών").Font(fontFamily).Alignment = Alignment.center;
+                t.Rows[2].Cells[1].Paragraphs.First().Append("ΑΜΟΙΒΗ: 73.00").Font(fontFamily);
+                t.Rows[3].Cells[0].Paragraphs.First().Append("ΤΗΛ: 210 3300 294").Font(fontFamily).Alignment = Alignment.center;
+                t.Rows[3].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
+                t.Rows[4].Cells[0].Paragraphs.First().Append("Π.Μιχοπούλου: 6986413493").Font(fontFamily).Alignment = Alignment.center;
+                t.Rows[4].Cells[1].Paragraphs.First().Append("ΦΠΑ 24%: 17.52").Font(fontFamily);
+                t.Rows[5].Cells[0].Paragraphs.First().Append("Μ.Ζούζουλα: 6955119261").Font(fontFamily).Alignment = Alignment.center;
+                t.Rows[5].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
+                t.Rows[6].Cells[0].Paragraphs.First().Append("email: odee.pmz@gmail.com").Font(fontFamily).Alignment = Alignment.center;
+                t.Rows[6].Cells[1].Paragraphs.First().Append("ΣΥΝΟΛΟ: 90.52").Font(fontFamily);
             }
             else
             {

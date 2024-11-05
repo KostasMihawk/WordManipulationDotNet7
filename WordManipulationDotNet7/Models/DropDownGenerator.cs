@@ -892,7 +892,7 @@ namespace WordManipulationDotNet7.Models
                 HasKleisimo = Kleisimo.denExei,
                 Signature = Signature.ypallilos,
                 FusikoProswpo = false,
-                ZoneB = true
+                ZoneB = null
             });
             list.Add(new EkthesiEpidoshsModel
             {
