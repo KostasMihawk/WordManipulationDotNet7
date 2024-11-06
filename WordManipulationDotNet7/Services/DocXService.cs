@@ -178,7 +178,7 @@ namespace WordManipulationDotNet7.Services
                 t.Rows[6].Cells[0].Paragraphs.First().Append("email: odee.pmz@gmail.com").Font(fontFamily).Alignment = Alignment.center;
                 t.Rows[6].Cells[1].Paragraphs.First().Append("ΣΥΝΟΛΟ: 68.20").Font(fontFamily);
             }
-            else if(ZoneB == null)
+            else if(ZoneB == false)
             {
                 t.Rows[0].Cells[0].Paragraphs.First().Append(" ΝΕΟΣ ΚΩΔΙΚΑΣ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
                 t.Rows[0].Cells[1].Paragraphs.First().Append("Ζώνη: Γ").Font(fontFamily);
