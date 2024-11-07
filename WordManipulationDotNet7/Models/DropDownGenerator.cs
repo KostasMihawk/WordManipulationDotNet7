@@ -499,8 +499,9 @@ namespace WordManipulationDotNet7.Models
                 FusikoProswpo = false,
                 Signature = Signature.paralavon,
                 HasKleisimo = Kleisimo.exei,
+                PriorityNumber = 1,
                 Kleisimo = "Αφού δεν βρήκα τον νόμιμο εκπρόσωπο του άνω Ν.Π.Δ.Δ. στην έδρα του επί της οδού Αγίου Κωνσταντίνου αρ. 16, ούτε Διευθυντή ή συνεργάτη, αλλά τ… εξουσιοδοτημέν… για την παραλαβή υπάλληλο αυτού …………………….……………, όπως μου δήλωσε, επέδωσα σ΄ αυτ…. το άνω δικόγραφο. " /// <------
-            });
+            }) ;
             list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στην Αθήνα",
@@ -509,7 +510,8 @@ namespace WordManipulationDotNet7.Models
                 Praxh = null,
                 HasKleisimo = Kleisimo.denExei,
                 Signature = Signature.ypallilos,
-                FusikoProswpo = false
+                FusikoProswpo = false,
+                PriorityNumber = 1,
             }); list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στην Αθήνα",
@@ -529,7 +531,8 @@ namespace WordManipulationDotNet7.Models
                 Praxh = null,
                 HasKleisimo = Kleisimo.denExei,
                 Signature = Signature.ypallilos,
-                FusikoProswpo = false
+                FusikoProswpo = false,
+                PriorityNumber= 1
             });
             list.Add(new EkthesiEpidoshsModel
             {
@@ -862,7 +865,8 @@ namespace WordManipulationDotNet7.Models
                 Praxh = null,
                 HasKleisimo = Kleisimo.denExei,
                 Signature = Signature.ypallilos,
-                FusikoProswpo = false
+                FusikoProswpo = false,
+                PriorityNumber =1
             });
             list.Add(new EkthesiEpidoshsModel
             {
@@ -911,7 +915,7 @@ namespace WordManipulationDotNet7.Models
             {
                 Location = "Στον Άλιμο Αττικής",
                 Name = "ΟΑΕΔ",
-                Perigrafh = "προς τον Οργανισμό Απασχόλησης Εργατικού Δυναμικού,",
+                Perigrafh = "προς τον Δημόσια Υπηρεσία Αποσχόλησης,",
                 Praxh = null,
                 HasKleisimo = Kleisimo.exei,
                 Signature = Signature.paralavon,
@@ -928,6 +932,7 @@ namespace WordManipulationDotNet7.Models
                 FusikoProswpo = false,
                 HasKleisimo = Kleisimo.exei,
                 Signature = Signature.paralavon,
+                PriorityNumber =1,
                 Kleisimo = "Αφού δεν βρήκα τον νόμιμο εκπρόσωπο της άνω εταιρείας στην έδρα της στην οδό Ακτή Μιαούλη αρ. 10 ούτε Διευθυντή ή συνεργάτη, αλλά τ… εξουσιοδοτημέν… για την παραλαβή υπάλληλο αυτής …………………….……………, όπως μου δήλωσε, επέδωσα σ΄ αυτ…. το άνω δικόγραφο. "
             });
             list.Add(new EkthesiEpidoshsModel
@@ -939,6 +944,7 @@ namespace WordManipulationDotNet7.Models
                 FusikoProswpo = false,
                 HasKleisimo = Kleisimo.denExei,
                 Signature = Signature.ypallilos,
+                PriorityNumber =1,
                 Kleisimo = "Αφού δεν βρήκα τον ίδιο στην έδρα του Νομικού Συμβουλίου του Κράτους επί της οδού Ακαδημίας & Χαρ. Τρικούπη, όπου σύμφωνα με τον Νόμο γίνονται οι επιδόσεις προς αυτόν, ούτε Διευθυντή ή συνεργάτη του, αλλά τ... εξουσιοδοτημέν... γιά την παραλαβή υπάλληλο Ν.Σ.Κ. ............................................, επέδωσα σ΄ αυτ... το άνω δικόγραφο."
             });
             list.Add(new EkthesiEpidoshsModel
