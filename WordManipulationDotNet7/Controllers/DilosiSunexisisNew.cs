@@ -57,6 +57,7 @@ namespace WordManipulationDotNet7.Controllers
                 var name when name.Contains("QQuant") => $"QQuant/{name}.docx",
                 var name when name.Contains("ALfa") => $"Αλφα/{name}.docx",
                 var name when name.Contains("pqh") => $"pqh/{name}.docx",
+                var name when name.Contains("_") => $"ΒΑΣΙΚΑ/{name}.docx",
                 _ => $"{doc.Name}.docx",
             };
         }

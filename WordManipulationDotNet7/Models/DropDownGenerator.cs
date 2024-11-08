@@ -493,7 +493,7 @@ namespace WordManipulationDotNet7.Models
             list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στην Αθήνα",
-                Name = "Ε.Φ.Κ.Α.",
+                Name = "_Ε.Φ.Κ.Α.",
                 Perigrafh = "προς το Ν.Π.Δ.Δ. με την επωνυμία e-ΕΦΚΑ που εδρεύει στην Αθήνα και εκπροσωπείται νόμιμα,",
                 Praxh = true,
                 FusikoProswpo = false,
@@ -505,7 +505,7 @@ namespace WordManipulationDotNet7.Models
             list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στην Αθήνα",
-                Name = "Α' ΠΕΡΙΦΕΡΕΙΑΚΟ ΚΕΑΟ",
+                Name = "_Α' ΠΕΡΙΦΕΡΕΙΑΚΟ ΚΕΑΟ",
                 Perigrafh = "προς τη Α' Περιφερειακή Διεύθυνση ΚΕΑΟ Αττικής,",
                 Praxh = null,
                 HasKleisimo = Kleisimo.denExei,
@@ -526,7 +526,7 @@ namespace WordManipulationDotNet7.Models
             list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στην Αθήνα",
-                Name = "Β' ΠΕΡΙΦΕΡΕΙΑΚΟ ΚΕΑΟ",
+                Name = "_Β' ΠΕΡΙΦΕΡΕΙΑΚΟ ΚΕΑΟ",
                 Perigrafh = "προς τη Β' Περιφερειακή Διεύθυνση ΚΕΑΟ Αττικής,",
                 Praxh = null,
                 HasKleisimo = Kleisimo.denExei,
@@ -537,7 +537,7 @@ namespace WordManipulationDotNet7.Models
             list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στον Πειραιά",
-                Name = "ΚΕΑΟ ΠΕΙΡΑΙΑ",
+                Name = "_ΚΕΑΟ ΠΕΙΡΑΙΑ",
                 Perigrafh = "προς το ΠΕΡΙΦΕΡΕΙΑΚΟ ΚΕΑΟ ΠΕΙΡΑΙΩΣ ΒΟΡΕΙΟΥ ΚΑΙ ΝΟΤΙΟΥ ΑΙΓΑΙΟΥα,",
                 Praxh = null,
                 HasKleisimo = Kleisimo.denExei,
@@ -608,7 +608,7 @@ namespace WordManipulationDotNet7.Models
             list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στην Αθήνα",
-                Name = "ΚΕΒΕΙΣ",
+                Name = "_ΚΕΒΕΙΣ",
                 Perigrafh = "προς τον προϊστάμενο του ΚΕ.Β.ΕΙΣ ΑΤΤΙΚΗΣ,",
                 Praxh = null,
                 Signature = Signature.ypallilos,
@@ -617,7 +617,7 @@ namespace WordManipulationDotNet7.Models
             }); list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στον Ταύρο Αττικής",
-                Name = "ΚΕΦΟΔΕ ΑΤΤΙΚΗΣ",
+                Name = "_ΚΕΦΟΔΕ ΑΤΤΙΚΗΣ",
                 Perigrafh = "προς τον προϊστάμενο του ΚΕ.ΦΟ.Δ.Ε. ΑΤΤΙΚΗΣ,",
                 Praxh = null,
                 Signature = Signature.ypallilos,
@@ -860,7 +860,7 @@ namespace WordManipulationDotNet7.Models
             list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στον Πειραιά",
-                Name = "ΤΕΛ",
+                Name = "_ΤΕΛ",
                 Perigrafh = "προς την Τελωνειακή Περιφέρεια Αττικής,",
                 Praxh = null,
                 HasKleisimo = Kleisimo.denExei,
@@ -926,7 +926,7 @@ namespace WordManipulationDotNet7.Models
             list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στον Πειραιά",
-                Name = "ΟΛΠ",
+                Name = "_ΟΛΠ",
                 Perigrafh = "προς τον Οργανισμό Λιμένος Πειραιώς Α.Ε.,",
                 Praxh = true,
                 FusikoProswpo = false,
@@ -938,7 +938,7 @@ namespace WordManipulationDotNet7.Models
             list.Add(new EkthesiEpidoshsModel
             {
                 Location = "Στην Αθήνα",
-                Name = "ΑΑΔΕ (Υπουργος Οικονομικων)",
+                Name = "_ΑΑΔΕ (Υπουργος Οικονομικων)",
                 Perigrafh = "προς τον κ. Διοικητή Της Ανεξάρτητης Αρχής Δημοσίων Εσόδων (Α.Α.Δ.Ε.), ως εκπρόσωπο του Ελληνικού Δημοσίου, κατοικοεδρεύοντα στην Αθήνα,",
                 Praxh = null,
                 FusikoProswpo = false,
@@ -950,7 +950,7 @@ namespace WordManipulationDotNet7.Models
             list.Add(new EkthesiEpidoshsModel
             {
                 Location = "",
-                Name = "Οφειλέτης",
+                Name = "_Οφειλέτης",
                 Perigrafh = "προς τον ",
                 Praxh = true,
                 HasKleisimo = Kleisimo.MegaloKeno,
