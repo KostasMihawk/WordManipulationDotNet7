@@ -146,7 +146,7 @@ namespace WordManipulationDotNet7.Services
 
             if (isFusikoProswpo)
             {
-                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΜΑΤΟΥΛΑ ΖΟΥΖΟΥΛΑ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
+                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
                 t.Rows[0].Cells[1].Paragraphs.First().Append("Ζώνη: " + zone.Name).Font(fontFamily);
                 t.Rows[1].Cells[0].Paragraphs.First().Append("Έδρα: Νικηταρά αρ. 8-10 - Αθήνα 10678").Font(fontFamily).Alignment = Alignment.center;
                 t.Rows[1].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
@@ -163,7 +163,7 @@ namespace WordManipulationDotNet7.Services
             }
             else if (ZoneB == true)
             {
-                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΜΑΤΟΥΛΑ ΖΟΥΖΟΥΛΑ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
+                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
                 t.Rows[0].Cells[1].Paragraphs.First().Append("Ζώνη: Β").Font(fontFamily);
                 t.Rows[1].Cells[0].Paragraphs.First().Append("Έδρα: Νικηταρά αρ. 8-10 - Αθήνα 10678").Font(fontFamily).Alignment = Alignment.center;
                 t.Rows[1].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
@@ -180,7 +180,7 @@ namespace WordManipulationDotNet7.Services
             }
             else if(ZoneB == false)
             {
-                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΜΑΤΟΥΛΑ ΖΟΥΖΟΥΛΑ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
+                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
                 t.Rows[0].Cells[1].Paragraphs.First().Append("Ζώνη: Γ").Font(fontFamily);
                 t.Rows[1].Cells[0].Paragraphs.First().Append("Έδρα: Νικηταρά αρ. 8-10 - Αθήνα 10678").Font(fontFamily).Alignment = Alignment.center;
                 t.Rows[1].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
@@ -197,7 +197,7 @@ namespace WordManipulationDotNet7.Services
             }
             else
             {
-                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΜΑΤΟΥΛΑ ΖΟΥΖΟΥΛΑ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
+                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ  Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
                 t.Rows[0].Cells[1].Paragraphs.First().Append("Ζώνη: A").Font(fontFamily);
                 t.Rows[1].Cells[0].Paragraphs.First().Append("Έδρα: Νικηταρά αρ. 8-10 - Αθήνα 10678").Font(fontFamily).Alignment = Alignment.center;
                 t.Rows[1].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
@@ -271,7 +271,7 @@ namespace WordManipulationDotNet7.Services
                 AddToParagraph(introParagraph, $"{locationUpiresias}, σήμερα στις ...................................... ");
             }
             AddToParagraph(introParagraph, "(     ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");
-            AddToParagraph(introParagraph, ", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΜΑΤΟΥΛΑ ΖΟΥΖΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, κατόπιν της έγγραφης παραγγελίας");
+            AddToParagraph(introParagraph, ", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, κατόπιν της έγγραφης παραγγελίας");
             if (epispeudon == "")
             {
                 AddToParagraph(introParagraph, $" {DebtorDesc},");
@@ -372,7 +372,7 @@ namespace WordManipulationDotNet7.Services
                 AddToParagraph(paragraph, $"{locationUpiresias}, ");
             }
             AddToParagraph(paragraph, $"σήμερα στις .................................... (      ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα ................................ και ώρα ........," +
-                $" εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, {bailif}, μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΜΑΤΟΥΛΑ ΖΟΥΖΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, κατόπιν της έγγραφης παραγγελίας {notary}" +
+                $" εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, {bailif}, μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, κατόπιν της έγγραφης παραγγελίας {notary}" +
                 $", ως επί του πλειστηριασμού υπαλλήλου,");
             return doc;
         }
@@ -383,7 +383,7 @@ namespace WordManipulationDotNet7.Services
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;
             AddToParagraph(paragraph, $"{Location}, σήμερα στις .................................... (      ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα ................................ και ώρα ........," +
-                    $" εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, ......................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΜΑΤΟΥΛΑ ΖΟΥΖΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης," +
+                    $" εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, ......................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης," +
                     $" κατόπιν της έγγραφης παραγγελίας της δικηγόρου Ναυπλίου ");
             AddtoParagraphWithUnderlineText(paragraph, $"Ευαγγελίας Ξυπνητού,");
             AddToParagraph(paragraph, $" πληρεξουσίου του υπό ειδική εκκαθάριση πιστωτικού ιδρύματος με την επωνυμία    ");
@@ -542,7 +542,7 @@ namespace WordManipulationDotNet7.Services
                 AddToParagraph(introParagraph, $"{locationUpiresias}, σήμερα στις ...................................... ");
             }
             AddToParagraph(introParagraph, "(     ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");
-            AddToParagraph(introParagraph, ", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΜΑΤΟΥΛΑ ΖΟΥΖΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, μετά την έγγραφη παραγγελία ");
+            AddToParagraph(introParagraph, ", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, μετά την έγγραφη παραγγελία ");
             AddToParagraph(introParagraph, "που μου δόθηκε στις ");
             AddToParagraphBoldText(introParagraph, DateOfOrder);
             AddToParagraph(introParagraph, " από "+ ProNounChange(NotaryPronoun) + " Συμβολαιογράφο " + NotaryCity + " ");
