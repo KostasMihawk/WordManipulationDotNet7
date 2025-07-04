@@ -55,6 +55,10 @@ namespace WordManipulationDotNet7.Services
         }
         private string GetCorrectMonthInFuckingGreek()
         {
+            if(DateTime.Now.Day > 24 )
+            {
+                return "..............................";
+            }
             switch (DateTime.Now.Month)
             {
                 case 1:
