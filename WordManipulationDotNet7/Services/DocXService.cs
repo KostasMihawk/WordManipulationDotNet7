@@ -132,6 +132,7 @@ namespace WordManipulationDotNet7.Services
 
         public DocX CreatePricingAndNameTable(DocX doc, Zone zone, bool isFusikoProswpo, bool? ZoneB)
         {
+
             Table t = doc.AddTable(7, 2);
             doc.MarginBottom = 0;
             doc.MarginTop = 20;
@@ -270,7 +271,7 @@ namespace WordManipulationDotNet7.Services
             {
                 AddToParagraph(introParagraph, $"{locationUpiresias}, σήμερα στις ...................................... ");
             }
-            AddToParagraph(introParagraph, "(     ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");
+            AddToParagraph(introParagraph, "(     ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");            
             AddToParagraph(introParagraph, ", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, κατόπιν της έγγραφης παραγγελίας");
             if (epispeudon == "")
             {
@@ -541,7 +542,7 @@ namespace WordManipulationDotNet7.Services
             {
                 AddToParagraph(introParagraph, $"{locationUpiresias}, σήμερα στις ...................................... ");
             }
-            AddToParagraph(introParagraph, "(     ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");
+            AddToParagraph(introParagraph, "(     ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");           
             AddToParagraph(introParagraph, ", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, μετά την έγγραφη παραγγελία ");
             AddToParagraph(introParagraph, "που μου δόθηκε στις ");
             AddToParagraphBoldText(introParagraph, DateOfOrder);
