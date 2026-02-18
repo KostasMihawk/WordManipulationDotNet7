@@ -546,7 +546,7 @@ namespace WordManipulationDotNet7.Services
             {
                 AddToParagraph(introParagraph, $"{locationUpiresias}, σήμερα στις ...................................... ");
             }
-            AddToParagraph(introParagraph, "(     ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι εξι (2026), ημέρα .......................................... και ώρα ........");           
+            AddToParagraph(introParagraph, "(     ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι έξι (2026), ημέρα .......................................... και ώρα ........");           
             AddToParagraph(introParagraph, ", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, μετά την έγγραφη παραγγελία ");
             AddToParagraph(introParagraph, "που μου δόθηκε στις ");
             AddToParagraphBoldText(introParagraph, DateOfOrder);
