@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Drawing;
-using System.Reflection;
+using Microsoft.Extensions.Options;
+using WordManipulationDotNet7.Configuration;
 using WordManipulationDotNet7.Models;
 using Xceed.Document.NET;
 using Xceed.Words.NET;
@@ -9,120 +10,101 @@ namespace WordManipulationDotNet7.Services
 {
     public class DocXService
     {
-        private double fontSize = 12;
-        private string fontFamily = "Times new roman";
-        private Formatting Formatting = new Formatting
+        private readonly CompanySettings _companySettings;
+        private readonly DocumentSettings _documentSettings;
+        private readonly PricingSettings _pricingSettings;
+        private readonly ILocalizationService _localizationService;
+        private readonly ILogger<DocXService> _logger;
+
+        private readonly double _fontSize;
+        private readonly string _fontFamily;
+        private readonly Formatting _formatting;
+
+        public DocXService(
+            IOptions<CompanySettings> companySettings,
+            IOptions<DocumentSettings> documentSettings,
+            IOptions<PricingSettings> pricingSettings,
+            ILocalizationService localizationService,
+            ILogger<DocXService> logger)
         {
-            Spacing = 1.2,
-            Size = 12
-        };
+            _companySettings = companySettings?.Value ?? throw new ArgumentNullException(nameof(companySettings));
+            _documentSettings = documentSettings?.Value ?? throw new ArgumentNullException(nameof(documentSettings));
+            _pricingSettings = pricingSettings?.Value ?? throw new ArgumentNullException(nameof(pricingSettings));
+            _localizationService = localizationService ?? throw new ArgumentNullException(nameof(localizationService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            _fontSize = _documentSettings.DefaultFontSize;
+            _fontFamily = _documentSettings.DefaultFontFamily;
+            _formatting = new Formatting
+            {
+                Spacing = _documentSettings.LineSpacing,
+                Size = _documentSettings.DefaultFontSize
+            };
+        }
+
         public Paragraph AddToParagraph(Paragraph paragraph, string text)
         {
-            paragraph.Append(text).FontSize(fontSize).Font(fontFamily);
+            ArgumentNullException.ThrowIfNull(paragraph);
+            paragraph.Append(text).FontSize(_fontSize).Font(_fontFamily);
             return paragraph;
         }
+
         public Paragraph AddToParagraph(Paragraph paragraph, string text, double fontSize, string fontFamily)
         {
+            ArgumentNullException.ThrowIfNull(paragraph);
             paragraph.Append(text).FontSize(fontSize).Font(fontFamily);
             return paragraph;
         }
 
         public Paragraph AddNewLine(Paragraph paragraph)
         {
+            ArgumentNullException.ThrowIfNull(paragraph);
             return paragraph.AppendLine();
         }
 
         public Paragraph AddToParagraphBoldText(Paragraph paragraph, string text)
         {
-            paragraph.Append(text).Bold().FontSize(fontSize).Font(fontFamily);
+            ArgumentNullException.ThrowIfNull(paragraph);
+            paragraph.Append(text).Bold().FontSize(_fontSize).Font(_fontFamily);
             return paragraph;
         }
 
         public Paragraph AddToParagraphBoldAndUnderlinedText(Paragraph paragraph, string text)
         {
-            paragraph.Append(text).Bold().UnderlineStyle(UnderlineStyle.singleLine).FontSize(fontSize).Font(fontFamily);
+            ArgumentNullException.ThrowIfNull(paragraph);
+            paragraph.Append(text).Bold().UnderlineStyle(UnderlineStyle.singleLine).FontSize(_fontSize).Font(_fontFamily);
             return paragraph;
         }
+
         public Paragraph AddtoParagraphWithUnderlineText(Paragraph paragraph, string text)
         {
-            paragraph.Append(text).UnderlineStyle(UnderlineStyle.singleLine).FontSize(fontSize).Font(fontFamily);
+            ArgumentNullException.ThrowIfNull(paragraph);
+            paragraph.Append(text).UnderlineStyle(UnderlineStyle.singleLine).FontSize(_fontSize).Font(_fontFamily);
             return paragraph;
         }
+
         public Paragraph AddtoParagraphWithItalic(Paragraph paragraph, string text)
         {
-            paragraph.Append(text).Italic().FontSize(fontSize).Font(fontFamily);
+            ArgumentNullException.ThrowIfNull(paragraph);
+            paragraph.Append(text).Italic().FontSize(_fontSize).Font(_fontFamily);
             return paragraph;
         }
-        private string GetCorrectMonthInFuckingGreek()
-        {
-            if(DateTime.Now.Day > 24 )
-            {
-                return "..............................";
-            }
-            switch (DateTime.Now.Month)
-            {
-                case 1:
-                    return "Ιανουαρίου";
-                case 2:
-                    return "Φεβρουαρίου";
-                case 3:
-                    return "Μαρτίου";
-                case 4:
-                    return "Απριλίου";
-                case 5:
-                    return "Μαϊου";
-                case 6:
-                    return "Ιουνίου";
-                case 7:
-                    return "Ιουλίου";
-                case 8:
-                    return "Αυγούστου";
-                case 9:
-                    return "Σεπτεμβρίου";
-                case 10:
-                    return "Οκτωβρίου";
-                case 11:
-                    return "Νοεμβρίου";
-                case 12:
-                    return "Δεκεμβρίου";
-                default:
-                    return "";
-            }
 
-
-        }
         public string EpiloghArthrouBasiGenous(Gender gender)
         {
-            if (gender == Gender.Man)
-                return "του ";
-            else if (gender == Gender.Woman)
-                return "της ";
-            else
-                return "της";
+            return _localizationService.GetGenderArticle(gender);
         }
 
         public string EpilogiArthrouBasiGenousGenikiPtwsh(Gender gender)
         {
-
-            if (gender == Gender.Man)
-                return "τον ";
-            else if (gender == Gender.Woman)
-                return "την ";
-            else
-                return "την";
+            return _localizationService.GetGenderArticleGenitive(gender);
         }
 
         public string EpilogiArthouOfileti(Gender gender)
         {
-            if (gender == Gender.Man)
-            {
-                return "του οφειλέτη";
-            }
-            else
-            {
-                return "της οφειλέτιδας";
-            }
+            return _localizationService.GetDebtorByGender(gender);
         }
+
         public string PraxiHPinakas(bool isPinakas)
         {
             return isPinakas ? "(ΠΙΝΑΚΑΣ ΚΑΤΑΤΑΞΗΣ - ΠΡΟΣΚΛΗΣΗ ΔΑΝΕΙΣΤΩΝ)" : "(ΠΡΟΣΚΛΗΣΗΣ ΔΑΝΕΙΣΤΩΝ)";
@@ -133,129 +115,107 @@ namespace WordManipulationDotNet7.Services
             return Article ? "966" : "973";
         }
 
-
         public DocX CreatePricingAndNameTable(DocX doc, Zone zone, bool isFusikoProswpo, bool? ZoneB)
         {
+            ArgumentNullException.ThrowIfNull(doc);
 
             Table t = doc.AddTable(7, 2);
             doc.MarginBottom = 0;
             doc.MarginTop = 20;
-
 
             t.SetColumnWidth(0, 350d);
             t.SetColumnWidth(1, 110d);
             t.SetBorder(TableBorderType.InsideH, new Border(BorderStyle.Tcbs_none, BorderSize.one, 0, Color.AntiqueWhite));
             t.Alignment = Alignment.center;
 
-
+            var companyInfo = $" {_companySettings.Name}";
+            var addressInfo = $"Έδρα: {_companySettings.Address} - {_companySettings.City} {_companySettings.PostalCode}";
+            var taxInfo = $"Α.Φ.Μ.: {_companySettings.TaxId} - Δ.Ο.Υ. {_companySettings.TaxOffice}";
+            var phoneInfo = $"ΤΗΛ: {_companySettings.Phone}";
+            var phone1Info = $"Π.Μιχοπούλου: {_companySettings.Phone1}";
+            var phone2Info = $"Μ.Ζούζουλα: {_companySettings.Phone2}";
+            var emailInfo = $"email: {_companySettings.Email}";
 
             if (isFusikoProswpo)
             {
-                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
-                t.Rows[0].Cells[1].Paragraphs.First().Append("Ζώνη: " + zone.Name).Font(fontFamily);
-                t.Rows[1].Cells[0].Paragraphs.First().Append("Έδρα: Νικηταρά αρ. 8-10 - Αθήνα 10678").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[1].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[2].Cells[0].Paragraphs.First().Append("Α.Φ.Μ.: 996910057 - Δ.Ο.Υ. ΚΕ.ΦΟ.ΔΕ. ΑΤΤΙΚΗΣ").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[2].Cells[1].Paragraphs.First().Append("ΑΜΟΙΒΗ: " + zone.Value.ToString("F")).Font(fontFamily);
-                t.Rows[3].Cells[0].Paragraphs.First().Append("ΤΗΛ: 210 3300 294").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[3].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[4].Cells[0].Paragraphs.First().Append("Π .Μιχοπούλου: 6986413493").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[4].Cells[1].Paragraphs.First().Append("ΦΠΑ 24%: " + zone.Tax.ToString("F")).Font(fontFamily);
-                t.Rows[5].Cells[0].Paragraphs.First().Append("Μ .Ζούζουλα: 6955119261").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[5].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[6].Cells[0].Paragraphs.First().Append("email: odee.pmz@gmail.com").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[6].Cells[1].Paragraphs.First().Append("ΣΥΝΟΛΟ: " + zone.TaxedValue.ToString("F")).Font(fontFamily);
+                PopulateTableRows(t, "Ζώνη: " + zone.Name, (decimal)zone.Value, (decimal)zone.Tax, (decimal)zone.TaxedValue,
+                    companyInfo, addressInfo, taxInfo, phoneInfo, phone1Info, phone2Info, emailInfo);
             }
             else if (ZoneB == true)
             {
-                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
-                t.Rows[0].Cells[1].Paragraphs.First().Append("Ζώνη: Β").Font(fontFamily);
-                t.Rows[1].Cells[0].Paragraphs.First().Append("Έδρα: Νικηταρά αρ. 8-10 - Αθήνα 10678").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[1].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[2].Cells[0].Paragraphs.First().Append("Α.Φ.Μ.: 996910057 - Δ.Ο.Υ. ΚΕ.ΦΟ.ΔΕ. ΑΤΤΙΚΗΣ").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[2].Cells[1].Paragraphs.First().Append("ΑΜΟΙΒΗ: 55.00").Font(fontFamily);
-                t.Rows[3].Cells[0].Paragraphs.First().Append("ΤΗΛ: 210 3300 294").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[3].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[4].Cells[0].Paragraphs.First().Append("Π.Μιχοπούλου: 6986413493").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[4].Cells[1].Paragraphs.First().Append("ΦΠΑ 24%: 13.20").Font(fontFamily);
-                t.Rows[5].Cells[0].Paragraphs.First().Append("Μ.Ζούζουλα: 6955119261").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[5].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[6].Cells[0].Paragraphs.First().Append("email: odee.pmz@gmail.com").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[6].Cells[1].Paragraphs.First().Append("ΣΥΝΟΛΟ: 68.20").Font(fontFamily);
+                var zoneBPrice = _pricingSettings.ZoneBPrice;
+                var zoneBTax = zoneBPrice * _pricingSettings.TaxRate;
+                var zoneBTotal = zoneBPrice + zoneBTax;
+                PopulateTableRows(t, "Ζώνη: Β", zoneBPrice, zoneBTax, zoneBTotal,
+                    companyInfo, addressInfo, taxInfo, phoneInfo, phone1Info, phone2Info, emailInfo);
             }
-            else if(ZoneB == false)
+            else if (ZoneB == false)
             {
-                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
-                t.Rows[0].Cells[1].Paragraphs.First().Append("Ζώνη: Γ").Font(fontFamily);
-                t.Rows[1].Cells[0].Paragraphs.First().Append("Έδρα: Νικηταρά αρ. 8-10 - Αθήνα 10678").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[1].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[2].Cells[0].Paragraphs.First().Append("Α.Φ.Μ.: 996910057 - Δ.Ο.Υ. Δ' Αθηνών").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[2].Cells[1].Paragraphs.First().Append("ΑΜΟΙΒΗ: 73.00").Font(fontFamily);
-                t.Rows[3].Cells[0].Paragraphs.First().Append("ΤΗΛ: 210 3300 294").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[3].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[4].Cells[0].Paragraphs.First().Append("Π.Μιχοπούλου: 6986413493").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[4].Cells[1].Paragraphs.First().Append("ΦΠΑ 24%: 17.52").Font(fontFamily);
-                t.Rows[5].Cells[0].Paragraphs.First().Append("Μ.Ζούζουλα: 6955119261").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[5].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[6].Cells[0].Paragraphs.First().Append("email: odee.pmz@gmail.com").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[6].Cells[1].Paragraphs.First().Append("ΣΥΝΟΛΟ: 90.52").Font(fontFamily);
+                var zoneCPrice = _pricingSettings.ZoneCPrice;
+                var zoneCTax = zoneCPrice * _pricingSettings.TaxRate;
+                var zoneCTotal = zoneCPrice + zoneCTax;
+                PopulateTableRows(t, "Ζώνη: Γ", zoneCPrice, zoneCTax, zoneCTotal,
+                    companyInfo, addressInfo, taxInfo, phoneInfo, phone1Info, phone2Info, emailInfo);
             }
             else
             {
-                t.Rows[0].Cells[0].Paragraphs.First().Append(" ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ  Α.Ε.Ε.Δ.Ε.").Font(fontFamily).Bold().Alignment = Alignment.center;
-                t.Rows[0].Cells[1].Paragraphs.First().Append("Ζώνη: A").Font(fontFamily);
-                t.Rows[1].Cells[0].Paragraphs.First().Append("Έδρα: Νικηταρά αρ. 8-10 - Αθήνα 10678").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[1].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[2].Cells[0].Paragraphs.First().Append("Α.Φ.Μ.: 996910057 - Δ.Ο.Υ. ΚΕ.ΦΟ.ΔΕ. ΑΤΤΙΚΗΣ").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[2].Cells[1].Paragraphs.First().Append("ΑΜΟΙΒΗ: 35.00").Font(fontFamily);
-                t.Rows[3].Cells[0].Paragraphs.First().Append("ΤΗΛ: 210 3300 294").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[3].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[4].Cells[0].Paragraphs.First().Append("Π.Μιχοπούλου: 6986413493").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[4].Cells[1].Paragraphs.First().Append("ΦΠΑ 24%: 8.40").Font(fontFamily);
-                t.Rows[5].Cells[0].Paragraphs.First().Append("Μ.Ζούζουλα: 6955119261").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[5].Cells[1].Paragraphs.First().Append("").Font(fontFamily);
-                t.Rows[6].Cells[0].Paragraphs.First().Append("email: odee.pmz@gmail.com").Font(fontFamily).Alignment = Alignment.center;
-                t.Rows[6].Cells[1].Paragraphs.First().Append("ΣΥΝΟΛΟ: 43.40").Font(fontFamily);
+                var zoneAPrice = _pricingSettings.ZoneAPrice;
+                var zoneATax = zoneAPrice * _pricingSettings.TaxRate;
+                var zoneATotal = zoneAPrice + zoneATax;
+                PopulateTableRows(t, "Ζώνη: A", zoneAPrice, zoneATax, zoneATotal,
+                    companyInfo, addressInfo, taxInfo, phoneInfo, phone1Info, phone2Info, emailInfo);
             }
 
-
-
             var color = Color.AntiqueWhite;
-            t.Rows[0].Cells[0].FillColor = color;
-            t.Rows[0].Cells[1].FillColor = color;
-            t.Rows[1].Cells[0].FillColor = color;
-            t.Rows[1].Cells[1].FillColor = color;
-            t.Rows[2].Cells[0].FillColor = color;
-            t.Rows[2].Cells[1].FillColor = color;
-            t.Rows[3].Cells[0].FillColor = color;
-            t.Rows[3].Cells[1].FillColor = color;
-            t.Rows[4].Cells[0].FillColor = color;
-            t.Rows[4].Cells[1].FillColor = color;
-            t.Rows[5].Cells[0].FillColor = color;
-            t.Rows[5].Cells[1].FillColor = color;
-            t.Rows[6].Cells[0].FillColor = color;
-            t.Rows[6].Cells[1].FillColor = color;
+            for (int i = 0; i < 7; i++)
+            {
+                t.Rows[i].Cells[0].FillColor = color;
+                t.Rows[i].Cells[1].FillColor = color;
+            }
 
             doc.InsertTable(t);
             return doc;
         }
 
-        public DocX AddHeaderToDocument(DocX doc, string fontFamilyCustom)
+        private void PopulateTableRows(Table t, string zoneText, decimal price, decimal tax, decimal total,
+            string companyInfo, string addressInfo, string taxInfo, string phoneInfo,
+            string phone1Info, string phone2Info, string emailInfo)
         {
+            t.Rows[0].Cells[0].Paragraphs.First().Append(companyInfo).Font(_fontFamily).Bold().Alignment = Alignment.center;
+            t.Rows[0].Cells[1].Paragraphs.First().Append(zoneText).Font(_fontFamily);
+            t.Rows[1].Cells[0].Paragraphs.First().Append(addressInfo).Font(_fontFamily).Alignment = Alignment.center;
+            t.Rows[1].Cells[1].Paragraphs.First().Append("").Font(_fontFamily);
+            t.Rows[2].Cells[0].Paragraphs.First().Append(taxInfo).Font(_fontFamily).Alignment = Alignment.center;
+            t.Rows[2].Cells[1].Paragraphs.First().Append($"ΑΜΟΙΒΗ: {price:F}").Font(_fontFamily);
+            t.Rows[3].Cells[0].Paragraphs.First().Append(phoneInfo).Font(_fontFamily).Alignment = Alignment.center;
+            t.Rows[3].Cells[1].Paragraphs.First().Append("").Font(_fontFamily);
+            t.Rows[4].Cells[0].Paragraphs.First().Append(phone1Info).Font(_fontFamily).Alignment = Alignment.center;
+            t.Rows[4].Cells[1].Paragraphs.First().Append($"ΦΠΑ {_pricingSettings.TaxRate * 100:F0}%: {tax:F}").Font(_fontFamily);
+            t.Rows[5].Cells[0].Paragraphs.First().Append(phone2Info).Font(_fontFamily).Alignment = Alignment.center;
+            t.Rows[5].Cells[1].Paragraphs.First().Append("").Font(_fontFamily);
+            t.Rows[6].Cells[0].Paragraphs.First().Append(emailInfo).Font(_fontFamily).Alignment = Alignment.center;
+            t.Rows[6].Cells[1].Paragraphs.First().Append($"ΣΥΝΟΛΟ: {total:F}").Font(_fontFamily);
+        }
+
+        public DocX AddHeaderToDocument(DocX doc, string? fontFamilyCustom)
+        {
+            ArgumentNullException.ThrowIfNull(doc);
+
             string header = "ΕΚΘΕΣΗ ΕΠΙΔΟΣΗΣ";
 
             var headerFormat = new Formatting();
-            headerFormat.FontFamily = new Xceed.Document.NET.Font(fontFamilyCustom ?? fontFamily);
+            headerFormat.FontFamily = new Xceed.Document.NET.Font(fontFamilyCustom ?? _fontFamily);
             headerFormat.Size = 13D;
             headerFormat.Bold = true;
             headerFormat.UnderlineStyle = UnderlineStyle.singleLine;
             headerFormat.Spacing = 1.2;
-            Paragraph headParagraph = doc.InsertParagraph("", false, headerFormat);
+
+            doc.InsertParagraph("", false, headerFormat);
 
             Paragraph headerTextParagraph = doc.InsertParagraph(header, false, headerFormat);
             headerTextParagraph.Alignment = Alignment.both;
             headerTextParagraph.Append("                                                                            ");
-            headerTextParagraph.Append("Αριθμός.............").Bold().UnderlineStyle(UnderlineStyle.singleLine).FontSize(12D).Spacing(1.2).Font(fontFamily).Alignment = Alignment.right;
+            headerTextParagraph.Append("Αριθμός.............").Bold().UnderlineStyle(UnderlineStyle.singleLine).FontSize(12D).Spacing(1.2).Font(_fontFamily).Alignment = Alignment.right;
             headerTextParagraph.AppendLine();
 
             return doc;
@@ -263,10 +223,13 @@ namespace WordManipulationDotNet7.Services
 
         public DocX CreateIntroParagraph(DocX doc, string location, string locationUpiresias, bool isFusikoProsopo, string epispeudon, string DebtorDesc)
         {
-            Paragraph introParagraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph introParagraph = doc.InsertParagraph("", false, _formatting);
             introParagraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             introParagraph.Alignment = Alignment.both;
             AddNewLine(introParagraph);
+
             if (isFusikoProsopo)
             {
                 AddToParagraph(introParagraph, $"{location}, σήμερα στις ...................................... ");
@@ -275,9 +238,12 @@ namespace WordManipulationDotNet7.Services
             {
                 AddToParagraph(introParagraph, $"{locationUpiresias}, σήμερα στις ...................................... ");
             }
-            AddToParagraph(introParagraph, "(     ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");            
-            AddToParagraph(introParagraph, ", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, κατόπιν της έγγραφης παραγγελίας");
-            if (epispeudon == "")
+
+            var monthName = _localizationService.GetGreekMonthName(DateTime.Now);
+            AddToParagraph(introParagraph, $"(     ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");
+            AddToParagraph(introParagraph, $", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «{_companySettings.Name}», που εδρεύει στην Αθήνα, οδός {_companySettings.Address}, με Α.Φ.Μ. {_companySettings.TaxId}, νομίμως εκπροσωπούμενης, κατόπιν της έγγραφης παραγγελίας");
+
+            if (string.IsNullOrEmpty(epispeudon))
             {
                 AddToParagraph(introParagraph, $" {DebtorDesc},");
             }
@@ -291,7 +257,9 @@ namespace WordManipulationDotNet7.Services
 
         public DocX EpispeudonParagraph(DocX doc, bool isFusikoProsopo, Gender gender, string ofeileths, string upiresia)
         {
-            Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;
 
@@ -310,7 +278,9 @@ namespace WordManipulationDotNet7.Services
 
         public DocX EpispeudonKatasxetiriaParagraph(DocX doc, string perigrafh, string ofeiletis, bool Eurobank, bool AlphaBank, bool Ethniki, bool Peiraios, bool Attica, bool HSBC, bool Chanion, bool Viva, bool Unicredit, bool Procredit, bool KentrikisMakedonias, bool AnaferomenaEggrafa, bool isAnagastikiEktelesi, string date)
         {
-            Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;
             AddToParagraph(paragraph, $"ήλθα για να επιδώσω ");
@@ -353,7 +323,9 @@ namespace WordManipulationDotNet7.Services
 
         public DocX ParagraphAkrivesAdigrafo(DocX doc, Gender gender, string documentNumber, string sumbolaiografos, string ofeileths, bool Article)
         {
-            Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
             
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;
@@ -365,9 +337,12 @@ namespace WordManipulationDotNet7.Services
 
         public DocX CreateIntroParagraphGiaPraxiDaneistwn(DocX doc, string location, string locationUpiresias, bool isFusikoProsopo, string bailif, string notary)
         {
-            Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;
+
             if (isFusikoProsopo)
             {
                 AddToParagraph(paragraph, $"{location}, ");
@@ -376,19 +351,25 @@ namespace WordManipulationDotNet7.Services
             {
                 AddToParagraph(paragraph, $"{locationUpiresias}, ");
             }
-            AddToParagraph(paragraph, $"σήμερα στις .................................... (      ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα ................................ και ώρα ........," +
-                $" εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, {bailif}, μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, κατόπιν της έγγραφης παραγγελίας {notary}" +
+
+            var monthName = _localizationService.GetGreekMonthName(DateTime.Now);
+            AddToParagraph(paragraph, $"σήμερα στις .................................... (      ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα ................................ και ώρα ........," +
+                $" εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, {bailif}, μέλος της εταιρείας «{_companySettings.Name}», που εδρεύει στην Αθήνα, οδός {_companySettings.Address}, με Α.Φ.Μ. {_companySettings.TaxId}, νομίμως εκπροσωπούμενης, κατόπιν της έγγραφης παραγγελίας {notary}" +
                 $", ως επί του πλειστηριασμού υπαλλήλου,");
             return doc;
         }
 
         public DocX CreateIntroParagraphKatasxetiria(DocX doc, string Location, PistotikaIdrymataUpoEkkatharisi pistotikaIdrymata)
         {
-            Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;
-            AddToParagraph(paragraph, $"{Location}, σήμερα στις .................................... (      ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα ................................ και ώρα ........," +
-                    $" εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, ......................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης," +
+
+            var monthName = _localizationService.GetGreekMonthName(DateTime.Now);
+            AddToParagraph(paragraph, $"{Location}, σήμερα στις .................................... (      ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα ................................ και ώρα ........," +
+                    $" εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, ......................................................., μέλος της εταιρείας «{_companySettings.Name}», που εδρεύει στην Αθήνα, οδός {_companySettings.Address}, με Α.Φ.Μ. {_companySettings.TaxId}, νομίμως εκπροσωπούμενης," +
                     $" κατόπιν της έγγραφης παραγγελίας της δικηγόρου Ναυπλίου ");
             AddtoParagraphWithUnderlineText(paragraph, $"Ευαγγελίας Ξυπνητού,");
             AddToParagraph(paragraph, $" πληρεξουσίου του υπό ειδική εκκαθάριση πιστωτικού ιδρύματος με την επωνυμία    ");
@@ -407,10 +388,11 @@ namespace WordManipulationDotNet7.Services
 
         public DocX ParagrafosPraxis(DocX doc, bool? isPraxi, string keimenoPraxis)
         {
+            ArgumentNullException.ThrowIfNull(doc);
 
             if (isPraxi == true)
             {
-                Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+                Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
                 paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
                 paragraph.Alignment = Alignment.both;
                 AddToParagraph(paragraph, keimenoPraxis);
@@ -424,7 +406,7 @@ namespace WordManipulationDotNet7.Services
             }
             else if (isPraxi == false)
             {
-                Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+                Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
                 paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
                 paragraph.Alignment = Alignment.both;
                 AddNewLine(paragraph);
@@ -435,7 +417,7 @@ namespace WordManipulationDotNet7.Services
             }
             else if (isPraxi == null && !string.IsNullOrEmpty(keimenoPraxis))
             {
-                Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+                Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
                 paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
                 paragraph.Alignment = Alignment.both;
                 AddToParagraph(paragraph, keimenoPraxis);
@@ -450,7 +432,9 @@ namespace WordManipulationDotNet7.Services
 
         public DocX ParagrafosSuntaxisEkthesis(DocX doc)
         {
-            Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;
             AddToParagraph(paragraph, $"Σε πίστωση των παραπάνω συνέταξα την παρούσα έκθεση επιδόσεως σε δύο όμοια πρωτότυπα η οποία αφού διαβάστηκε και βεβαιώθηκε υπογράφεται όπως ακολουθεί.");
@@ -459,7 +443,9 @@ namespace WordManipulationDotNet7.Services
 
         public DocX ParagrafosUpografis(DocX doc, bool? isPraxi, bool isFusikoProsopo, Signature signature)
         {
-            Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;
             AddNewLine(paragraph);
@@ -485,7 +471,9 @@ namespace WordManipulationDotNet7.Services
 
         public DocX ParagrapfosProsOfeilethPraxisDaneistwn(DocX doc, Gender gender, bool isFusikoProsopo, string ofeiletis, string upiresia)
         {
-            Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;            
             if (isFusikoProsopo)
@@ -503,7 +491,9 @@ namespace WordManipulationDotNet7.Services
 
         public DocX ParagrafosAkrivesAdigrafouPraxisDaneistwn(DocX doc, Gender gender, string defender, string documentNumber, string ofeiletis, bool isPinakas, bool IsAnaplistiriasmos, bool IsEikozomenon, string AttorneyNoun)
         {
-            Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;           
             AddToParagraph(paragraph, $"ακριβές αντίγραφο της υπ΄ αριθμόν ");
@@ -534,10 +524,13 @@ namespace WordManipulationDotNet7.Services
 
         public DocX CreateIntroParagraphDilosiSunexisis(DocX doc, string location, string locationUpiresias, bool isFusikoProsopo, string DateOfConfiscation, string NotaryDescription, string DateOfOrder, string NotaryName, string NotaryCity, string NotaryPronoun)
         {
-            Paragraph introParagraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph introParagraph = doc.InsertParagraph("", false, _formatting);
             introParagraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             introParagraph.Alignment = Alignment.both;
             AddNewLine(introParagraph);
+
             if (isFusikoProsopo)
             {
                 AddToParagraph(introParagraph, $"{location}, σήμερα στις ...................................... ");
@@ -546,8 +539,10 @@ namespace WordManipulationDotNet7.Services
             {
                 AddToParagraph(introParagraph, $"{locationUpiresias}, σήμερα στις ...................................... ");
             }
-            AddToParagraph(introParagraph, "(     ) του μηνός " + GetCorrectMonthInFuckingGreek() + " του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");           
-            AddToParagraph(introParagraph, ", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «ΜΙΧΟΠΟΥΛΟΥ ΠΑΡΑΣΚΕΥΗ - ΖΟΥΖΟΥΛΑ ΜΑΤΟΥΛΑ Α.Ε.Ε.Δ.Ε.», που εδρεύει στην Αθήνα, οδός Νικηταρά αρ. 8-10, με Α.Φ.Μ. 996910057, νομίμως εκπροσωπούμενης, μετά την έγγραφη παραγγελία ");
+
+            var monthName = _localizationService.GetGreekMonthName(DateTime.Now);
+            AddToParagraph(introParagraph, $"(     ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");
+            AddToParagraph(introParagraph, $", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «{_companySettings.Name}», που εδρεύει στην Αθήνα, οδός {_companySettings.Address}, με Α.Φ.Μ. {_companySettings.TaxId}, νομίμως εκπροσωπούμενης, μετά την έγγραφη παραγγελία ");
             AddToParagraph(introParagraph, "που μου δόθηκε στις ");
             AddToParagraphBoldText(introParagraph, DateOfOrder);
             AddToParagraph(introParagraph, " από "+ ProNounChange(NotaryPronoun) + " Συμβολαιογράφο " + NotaryCity + " ");
@@ -558,7 +553,9 @@ namespace WordManipulationDotNet7.Services
 
         public DocX EpispeudonParagraphDilosi(DocX doc, bool isFusikoProsopo, Gender gender, string ofeileths, string upiresia)
         {
-            Paragraph paragraph = doc.InsertParagraph("", false, Formatting);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;
             
@@ -578,7 +575,9 @@ namespace WordManipulationDotNet7.Services
 
         public DocX ParagraphAkrivesAdigrafoDilosi(DocX doc, Gender gender, string documentNumber, string sumbolaiografos, string ofeileths, bool Article, string DateOfConfiscation, string FundName, string FundDesc, string MaedapName, string MaedapAdress, string NotaryPronoun)
         {
-            Paragraph paragraph = doc.InsertParagraph("", false, Formatting);            
+            ArgumentNullException.ThrowIfNull(doc);
+
+            Paragraph paragraph = doc.InsertParagraph("", false, _formatting);
             paragraph.SetLineSpacing(LineSpacingType.Line, 16.0f);
             paragraph.Alignment = Alignment.both;
             AddToParagraph(paragraph, $"ακριβές αντίγραφο της υπ΄ αριθμόν");
@@ -598,6 +597,8 @@ namespace WordManipulationDotNet7.Services
 
         public MemoryStream EntoliSunexisisPlistiriasmou(SunexisiPlistiriasmouModel model)
         {
+            ArgumentNullException.ThrowIfNull(model);
+
             using (DocX doc = DocX.Create(String.Format("Zip_{0}.docx", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"))))
             {
                 CreatePricingAndNameTable(doc, model.Zone, model.IsFusikoProsopo, model.ZoneB);
@@ -614,6 +615,8 @@ namespace WordManipulationDotNet7.Services
 
         public MemoryStream CreateAndReturnDocAsMemoryStream(DocX doc)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+
             var ms = new MemoryStream();
             doc.SaveAs(ms);
             ms.Position = 0;
@@ -621,6 +624,8 @@ namespace WordManipulationDotNet7.Services
         }
         public MemoryStream DilosiSunexisis(DilosiSunexisisModel model)
         {
+            ArgumentNullException.ThrowIfNull(model);
+
             using (DocX doc = DocX.Create(String.Format(model.Debtor + ".docx", DateTime.Now)))
             {
                 CreatePricingAndNameTable(doc, model.Zone, model.IsFusikoProsopo, model.ZoneB);
@@ -636,6 +641,8 @@ namespace WordManipulationDotNet7.Services
         }
         public MemoryStream PraxiPlistiriasmou(LoanerInvitationModel model)
         {
+            ArgumentNullException.ThrowIfNull(model);
+
             using (DocX doc = DocX.Create(String.Format("Zip_{0}.docx", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"))))
             {
                 CreatePricingAndNameTable(doc, model.Zone, model.IsFusikoProsopo, model.ZoneB);

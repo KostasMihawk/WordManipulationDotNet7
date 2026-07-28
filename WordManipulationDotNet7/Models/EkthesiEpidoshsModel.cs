@@ -1,18 +1,39 @@
-﻿namespace WordManipulationDotNet7.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WordManipulationDotNet7.Models
 {
     public class EkthesiEpidoshsModel
     {
-        public string Location { get; set; }
-        public string Name { get; set; }
-        public string Perigrafh { get; set; }
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(200)]
+        public string Location { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(200)]
+        public string Name { get; set; } = string.Empty;
+
+        [StringLength(500)]
+        public string? Perigrafh { get; set; }
+
         public bool? Praxh { get; set; }
+
         public bool FusikoProswpo { get; set; }
-        public string Kleisimo { get; set; }
+
+        [StringLength(200)]
+        public string? Kleisimo { get; set; }
+
         public Kleisimo HasKleisimo { get; set; }
+
         public Signature Signature { get; set; }
+
         public bool? ZoneB { get; set; }
+
         public int PriorityNumber { get; set; }
     }
+
     public enum Signature
     {
         paredros,
@@ -20,5 +41,4 @@
         paralavon,
         genericMartyras
     }
-   
 }

@@ -1,0 +1,80 @@
+@model WordManipulationDotNet7.Models.Attorney
+@{
+    ViewData["Title"] = "Επεξεργασία Δικηγόρου/Συμβολαιογράφου";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Επεξεργασία: @Model.Name</h4>
+            <p class="mb-0 text-muted">
+                <span class="badge bg-info">@ViewBag.AttorneyType</span>
+                Τύπος: 
+                @(Model.Id < 100 ? "Συμβολαιογράφος" :
+                  Model.Id < 200 ? "Νέος Συμβολαιογράφος" : "Δικηγόρος")
+                (ID: @Model.Id - δεν μπορεί να αλλάξει τύπος)
+            </p>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Admin" asp-action="EditAttorney" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Name" class="form-label">Όνομα *</label>
+                        <input asp-for="Name" class="form-control" required />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="City" class="form-label">Πόλη *</label>
+                        <input asp-for="City" class="form-control" required />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Pronoun" class="form-label">Αντωνυμία</label>
+                        <select asp-for="Pronoun" class="form-select">
+                            <option value="του">του</option>
+                            <option value="της">της</option>
+                        </select>
+                        <span asp-validation-for="Pronoun" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Description" class="form-label">Περιγραφή</label>
+                        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="GiaSunexisi" class="form-label">Για Συνέχιση</label>
+                        <textarea asp-for="GiaSunexisi" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="GiaSunexisi" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Αποθήκευση Αλλαγών</button>
+                    <a asp-controller="Admin" asp-action="Attorneys" class="btn btn-secondary">Ακύρωση</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

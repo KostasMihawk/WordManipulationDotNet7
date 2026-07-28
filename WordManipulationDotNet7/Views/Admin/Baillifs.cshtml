@@ -1,0 +1,96 @@
+@model List<WordManipulationDotNet7.Models.Baillif>
+@{
+    ViewData["Title"] = "Διαχείριση Δικαστικών Επιμελητών";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Add New Bailiff Form -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Προσθήκη Νέου Δικαστικού Επιμελητή</h4>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Admin" asp-action="AddBaillif" method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="Name" class="form-label">Όνομα</label>
+                        <input type="text" class="form-control" id="Name" name="Name" required />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="City" class="form-label">Πόλη</label>
+                        <input type="text" class="form-control" id="City" name="City" />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="AFM" class="form-label">ΑΦΜ</label>
+                        <input type="text" class="form-control" id="AFM" name="AFM" />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Προσθήκη</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- List of Baillifs -->
+    <div class="card">
+        <div class="card-header">
+            <h4>Υπάρχοντες Δικαστικοί Επιμελητές</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Όνομα</th>
+                        <th>Πόλη</th>
+                        <th>ΑΦΜ</th>
+                        <th>Ενέργειες</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var baillif in Model)
+                    {
+                        <tr>
+                            <td>@baillif.Id</td>
+                            <td>@baillif.Name</td>
+                            <td>@baillif.City</td>
+                            <td>@baillif.AFM</td>
+                            <td>
+                                <a asp-controller="Admin" asp-action="EditBaillif" asp-route-id="@baillif.Id" class="btn btn-warning btn-sm me-1">Επεξεργασία</a>
+                                <form asp-controller="Admin" asp-action="DeleteBaillif" method="post" style="display:inline;"
+                                      onsubmit="return confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτόν τον επιμελητή;');">
+                                    <input type="hidden" name="id" value="@baillif.Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Διαγραφή</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-controller="Admin" asp-action="Index" class="btn btn-secondary">Επιστροφή στο Admin Panel</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Επιστροφή στην Αρχική</a>
+    </div>
+</div>

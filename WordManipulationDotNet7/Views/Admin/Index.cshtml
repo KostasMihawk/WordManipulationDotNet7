@@ -1,0 +1,142 @@
+@model WordManipulationDotNet7.Controllers.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Διαχείριση Δεδομένων";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+    <p class="text-center text-muted">Διαχειριστείτε όλα τα δεδομένα της εφαρμογής από μία θέση</p>
+
+    <div class="row mt-5">
+        <!-- Baillifs Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-primary">
+                <div class="card-body text-center">
+                    <i class="bi bi-person-badge fs-1 text-primary"></i>
+                    <h5 class="card-title mt-3">Δικαστικοί Επιμελητές</h5>
+                    <p class="card-text">
+                        <span class="badge bg-primary fs-5">@Model.BaillifCount</span> εγγραφές
+                    </p>
+                    <a asp-controller="Admin" asp-action="Baillifs" class="btn btn-primary w-100">
+                        Διαχείριση
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attorneys Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-success">
+                <div class="card-body text-center">
+                    <i class="bi bi-briefcase fs-1 text-success"></i>
+                    <h5 class="card-title mt-3">Δικηγόροι & Συμβολαιογράφοι</h5>
+                    <p class="card-text">
+                        <span class="badge bg-success fs-5">@Model.AttorneyCount</span> εγγραφές
+                    </p>
+                    <a asp-controller="Admin" asp-action="Attorneys" class="btn btn-success w-100">
+                        Διαχείριση
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Funds Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-warning">
+                <div class="card-body text-center">
+                    <i class="bi bi-bank fs-1 text-warning"></i>
+                    <h5 class="card-title mt-3">Ταμεία</h5>
+                    <p class="card-text">
+                        <span class="badge bg-warning text-dark fs-5">@Model.FundCount</span> εγγραφές
+                    </p>
+                    <a asp-controller="Admin" asp-action="Funds" class="btn btn-warning w-100">
+                        Διαχείριση
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zones Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-info">
+                <div class="card-body text-center">
+                    <i class="bi bi-geo-alt fs-1 text-info"></i>
+                    <h5 class="card-title mt-3">Ζώνες Τιμολόγησης</h5>
+                    <p class="card-text">
+                        <span class="badge bg-info fs-5">@Model.ZoneCount</span> εγγραφές
+                    </p>
+                    <p class="text-muted small">Διαχείριση μέσω SQL</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banks Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-danger">
+                <div class="card-body text-center">
+                    <i class="bi bi-building fs-1 text-danger"></i>
+                    <h5 class="card-title mt-3">Τράπεζες</h5>
+                    <p class="card-text">
+                        <span class="badge bg-danger fs-5">@Model.BankCount</span> εγγραφές
+                    </p>
+                    <p class="text-muted small">Διαχείριση μέσω SQL</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documents Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card border-secondary">
+                <div class="card-body text-center">
+                    <i class="bi bi-file-earmark-text fs-1 text-secondary"></i>
+                    <h5 class="card-title mt-3">Πρότυπα Εγγράφων</h5>
+                    <p class="card-text">
+                        <span class="badge bg-secondary fs-5">@Model.DocumentCount</span> εγγραφές
+                    </p>
+                    <a asp-controller="Admin" asp-action="Documents" class="btn btn-secondary w-100">
+                        Διαχείριση
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5" />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">Χρήσιμες Πληροφορίες</h5>
+                    <ul>
+                        <li><strong>Σύνδεση Database:</strong> PostgreSQL - WordManipulationDb</li>
+                        <li><strong>Backup:</strong> Χρησιμοποιήστε pgAdmin ή το αρχείο SQL_QUERIES.sql</li>
+                        <li><strong>Τεκμηρίωση:</strong> Δείτε τα αρχεία DATABASE_SETUP.md και IMPLEMENTATION_SUMMARY.md</li>
+                        <li><strong>SQL Queries:</strong> Δείτε το αρχείο SQL_QUERIES.sql για έτοιμα queries</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-lg btn-outline-secondary">
+            <i class="bi bi-house"></i> Επιστροφή στην Αρχική
+        </a>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .bi {
+        display: inline-block;
+    }
+</style>

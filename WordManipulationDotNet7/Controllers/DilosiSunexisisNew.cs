@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Ionic.Zip;
-using System.IO;
+using System.IO.Compression;
 using WordManipulationDotNet7.Models;
 using WordManipulationDotNet7.Services;
 using WordManipulationDotNet7.ViewModels;
@@ -10,10 +9,17 @@ namespace WordManipulationDotNet7.Controllers
     public class DilosiSunexisisNew : Controller
     {
         private readonly DocXService _docXService;
+        private readonly ILogger<DilosiSunexisisNew> _logger;
+        private readonly DropDownGeneratorDb _dropDownGenerator;
 
-        public DilosiSunexisisNew(DocXService docXService)
+        public DilosiSunexisisNew(
+            DocXService docXService, 
+            ILogger<DilosiSunexisisNew> logger,
+            DropDownGeneratorDb dropDownGenerator)
         {
-            _docXService = docXService;
+            _docXService = docXService ?? throw new ArgumentNullException(nameof(docXService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _dropDownGenerator = dropDownGenerator ?? throw new ArgumentNullException(nameof(dropDownGenerator));
         }
 
         public IActionResult CreateDilosi()
@@ -24,29 +30,44 @@ namespace WordManipulationDotNet7.Controllers
         [HttpPost]
         public ActionResult CreateDilosi(DilosiSunexisisVm vm)
         {
-            var generator = new DropDownGenerator();
-            var summary = new Summary(_docXService);
-            var model = new DilosiSunexisisModel(vm);
-            var zipFiles = generator.GetZipFiles();
-
-            using (var stream = new MemoryStream())
+            try
             {
-                using (var zip = new ZipFile(System.Text.Encoding.UTF8))
+                if (!ModelState.IsValid)
                 {
-                    zip.AlternateEncodingUsage = ZipOption.AsNecessary;
+                    return View(vm);
+                }
+
+                var generator = new DropDownGenerator();
+                var summary = new Summary(_docXService);
+                var model = new DilosiSunexisisModel(vm);
+                var zipFiles = _dropDownGenerator.GetZipFiles();
+
+                using var memoryStream = new MemoryStream();
+                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
                     foreach (var doc in zipFiles)
                     {
                         model.fillZipEntries(doc);
                         var entryName = GetEntryName(doc);
-                        zip.AddEntry(entryName, summary.CreateDilosiSunexisis(model));
+                        var entry = archive.CreateEntry(entryName);
+
+                        using var entryStream = entry.Open();
+                        using var documentStream = summary.CreateDilosiSunexisis(model);
+                        documentStream.CopyTo(entryStream);
                     }
-                    zip.Save(stream);
                 }
-                return File(stream.ToArray(), "application/zip", $"{vm.Debtor}.zip");
+
+                memoryStream.Position = 0;
+                return File(memoryStream.ToArray(), "application/zip", $"{vm.Debtor}.zip");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating Dilosi Sunexisis for debtor: {Debtor}", vm?.Debtor);
+                return StatusCode(500, "An error occurred while creating the document.");
             }
         }
 
-        private string GetEntryName(EkthesiEpidoshsModel doc)
+        private static string GetEntryName(EkthesiEpidoshsModel doc)
         {
             return doc.Name switch
             {

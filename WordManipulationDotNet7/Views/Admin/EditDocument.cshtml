@@ -1,0 +1,123 @@
+@model WordManipulationDotNet7.Models.EkthesiEpidoshsModel
+@{
+    ViewData["Title"] = "Επεξεργασία Προτύπου Εγγράφου";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Επεξεργασία: @Model.Name</h4>
+            <p class="mb-0 text-muted">ID: @Model.Id</p>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Admin" asp-action="EditDocument" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Name" class="form-label">Όνομα Προτύπου *</label>
+                        <input asp-for="Name" class="form-control" required />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Location" class="form-label">Τοποθεσία *</label>
+                        <input asp-for="Location" class="form-control" required 
+                               placeholder="π.χ. Εφοριες, Cepal, doValue" />
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label asp-for="Perigrafh" class="form-label">Περιγραφή</label>
+                        <textarea asp-for="Perigrafh" class="form-control" rows="2" 
+                                  placeholder="Προαιρετική περιγραφή του προτύπου"></textarea>
+                        <span asp-validation-for="Perigrafh" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label asp-for="PriorityNumber" class="form-label">Αριθμός Προτεραιότητας</label>
+                        <input asp-for="PriorityNumber" type="number" class="form-control" />
+                        <small class="form-text text-muted">Χαμηλότερος = Υψηλότερη προτεραιότητα</small>
+                        <span asp-validation-for="PriorityNumber" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Πράξη</label>
+                        <select asp-for="Praxh" class="form-select">
+                            <option value="">-- Επιλέξτε --</option>
+                            <option value="true">Ναι</option>
+                            <option value="false">Όχι</option>
+                        </select>
+                        <span asp-validation-for="Praxh" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Zone B</label>
+                        <select asp-for="ZoneB" class="form-select">
+                            <option value="">-- Επιλέξτε --</option>
+                            <option value="true">Ναι</option>
+                            <option value="false">Όχι</option>
+                        </select>
+                        <span asp-validation-for="ZoneB" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="FusikoProswpo" class="form-label">Φυσικό Πρόσωπο</label>
+                        <select asp-for="FusikoProswpo" class="form-select">
+                            <option value="true">Ναι</option>
+                            <option value="false">Όχι</option>
+                        </select>
+                        <span asp-validation-for="FusikoProswpo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label asp-for="HasKleisimo" class="form-label">Τύπος Κλεισίματος</label>
+                        <select asp-for="HasKleisimo" class="form-select">
+                            <option value="0">exei (έχει)</option>
+                            <option value="1">denExei (δεν έχει)</option>
+                            <option value="2">MegaloKeno (Μεγάλο Κενό)</option>
+                        </select>
+                        <span asp-validation-for="HasKleisimo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Kleisimo" class="form-label">Κείμενο Κλεισίματος</label>
+                        <input asp-for="Kleisimo" class="form-control" 
+                               placeholder="Προαιρετικό κείμενο κλεισίματος" />
+                        <span asp-validation-for="Kleisimo" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label asp-for="Signature" class="form-label">Τύπος Υπογραφής</label>
+                        <select asp-for="Signature" class="form-select">
+                            <option value="0">paredros (πάρεδρος)</option>
+                            <option value="1">ypallilos (υπάλληλος)</option>
+                            <option value="2">paralavon (παραλαβών)</option>
+                            <option value="3">genericMartyras (γενικός μάρτυρας)</option>
+                        </select>
+                        <span asp-validation-for="Signature" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Αποθήκευση Αλλαγών</button>
+                    <a asp-controller="Admin" asp-action="Documents" class="btn btn-secondary">Ακύρωση</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

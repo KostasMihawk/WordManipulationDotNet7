@@ -1,0 +1,62 @@
+@model WordManipulationDotNet7.Models.Fund
+@{
+    ViewData["Title"] = "Επεξεργασία Ταμείου";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Επεξεργασία: @Model.Name</h4>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Admin" asp-action="EditFund" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Name" class="form-label">Όνομα Ταμείου *</label>
+                        <input asp-for="Name" class="form-control" required />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Description" class="form-label">Περιγραφή</label>
+                        <input asp-for="Description" class="form-control" placeholder="π.χ. με έδρα το Δουβλίνο Ιρλανδίας" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="MAEDAP" class="form-label">ΜΑΕΔΑΠ</label>
+                        <input asp-for="MAEDAP" class="form-control" />
+                        <span asp-validation-for="MAEDAP" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="MAEDAPAdress" class="form-label">Διεύθυνση ΜΑΕΔΑΠ</label>
+                        <input asp-for="MAEDAPAdress" class="form-control" />
+                        <span asp-validation-for="MAEDAPAdress" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Αποθήκευση Αλλαγών</button>
+                    <a asp-controller="Admin" asp-action="Funds" class="btn btn-secondary">Ακύρωση</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

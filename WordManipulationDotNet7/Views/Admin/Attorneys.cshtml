@@ -1,0 +1,134 @@
+@model List<WordManipulationDotNet7.Models.Attorney>
+@{
+    ViewData["Title"] = "Διαχείριση Δικηγόρων/Συμβολαιογράφων";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Add New Attorney Form -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Προσθήκη Νέου Δικηγόρου/Συμβολαιογράφου</h4>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Admin" asp-action="AddAttorney" method="post">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="AttorneyType" class="form-label">Τύπος</label>
+                        <select name="AttorneyType" class="form-select" required>
+                            @foreach (var item in ViewBag.AttorneyTypes)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="Name" class="form-label">Όνομα</label>
+                        <input type="text" class="form-control" name="Name" required />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="City" class="form-label">Πόλη</label>
+                        <input type="text" class="form-control" name="City" />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="Pronoun" class="form-label">Αντωνυμία</label>
+                        <select name="Pronoun" class="form-select">
+                            <option value="του">του</option>
+                            <option value="της">της</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="Description" class="form-label">Περιγραφή</label>
+                        <textarea name="Description" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="GiaSunexisi" class="form-label">Για Συνέχιση</label>
+                        <textarea name="GiaSunexisi" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Προσθήκη</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- List of Attorneys -->
+    <div class="card">
+        <div class="card-header">
+            <h4>Υπάρχοντες Δικηγόροι/Συμβολαιογράφοι</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Τύπος</th>
+                        <th>Όνομα</th>
+                        <th>Πόλη</th>
+                        <th>Αντωνυμία</th>
+                        <th>Ενέργειες</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var attorney in Model)
+                    {
+                        var type = attorney.Id < 100 ? "Συμβολαιογράφος" :
+                                   attorney.Id < 200 ? "Νέος Συμβολαιογράφος" : "Δικηγόρος";
+                        <tr>
+                            <td>@attorney.Id</td>
+                            <td><span class="badge bg-info">@type</span></td>
+                            <td>@attorney.Name</td>
+                            <td>@attorney.City</td>
+                            <td>@attorney.Pronoun</td>
+                            <td>
+                                <a asp-controller="Admin" asp-action="EditAttorney" asp-route-id="@attorney.Id" class="btn btn-warning btn-sm me-1">Επεξεργασία</a>
+                                <form asp-controller="Admin" asp-action="DeleteAttorney" method="post" style="display:inline;"
+                                      onsubmit="return confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε;');">
+                                    <input type="hidden" name="id" value="@attorney.Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Διαγραφή</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-controller="Admin" asp-action="Baillifs" class="btn btn-secondary">Επιμελητές</a>
+        <a asp-controller="Admin" asp-action="Funds" class="btn btn-secondary">Ταμεία</a>
+        <a asp-controller="Admin" asp-action="Index" class="btn btn-secondary">Admin Panel</a>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Αρχική</a>
+    </div>
+</div>
+
+<style>
+    .table th {
+        background-color: #f8f9fa;
+    }
+</style>

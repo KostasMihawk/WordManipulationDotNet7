@@ -1,0 +1,18 @@
+@{
+    ViewData["Title"] = "Diagnostics Test";
+}
+
+<h1>Diagnostics Test Page</h1>
+<p>If you can see this, views are working correctly.</p>
+
+<ul>
+    <li><a href="/Admin/Test">Test Admin Controller (Simple Response)</a></li>
+    <li><a href="/Admin">Test Admin Dashboard (Full View)</a></li>
+    <li><a href="/Diagnostics">Test Diagnostics (Simple Response)</a></li>
+</ul>
+
+<div class="alert alert-info mt-4">
+    <h4>System Info:</h4>
+    <p>Time: @DateTime.Now</p>
+    <p>Environment: @System.Environment.MachineName</p>
+</div>

@@ -1,0 +1,57 @@
+@model WordManipulationDotNet7.Models.Baillif
+@{
+    ViewData["Title"] = "Επεξεργασία Δικαστικού Επιμελητή";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header">
+            <h4>Επεξεργασία: @Model.Name</h4>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Admin" asp-action="EditBaillif" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Name" class="form-label">Όνομα *</label>
+                        <input asp-for="Name" class="form-control" required />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="City" class="form-label">Πόλη *</label>
+                        <input asp-for="City" class="form-control" required />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="AFM" class="form-label">ΑΦΜ</label>
+                        <input asp-for="AFM" class="form-control" />
+                        <span asp-validation-for="AFM" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Αποθήκευση Αλλαγών</button>
+                    <a asp-controller="Admin" asp-action="Baillifs" class="btn btn-secondary">Ακύρωση</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
