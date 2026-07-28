@@ -240,7 +240,7 @@ namespace WordManipulationDotNet7.Services
             }
 
             var monthName = _localizationService.GetGreekMonthName(DateTime.Now);
-            AddToParagraph(introParagraph, $"(     ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");
+            AddToParagraph(introParagraph, $"(     ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι έξι (2026), ημέρα .......................................... και ώρα ........");
             AddToParagraph(introParagraph, $", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «{_companySettings.Name}», που εδρεύει στην Αθήνα, οδός {_companySettings.Address}, με Α.Φ.Μ. {_companySettings.TaxId}, νομίμως εκπροσωπούμενης, κατόπιν της έγγραφης παραγγελίας");
 
             if (string.IsNullOrEmpty(epispeudon))
@@ -353,7 +353,7 @@ namespace WordManipulationDotNet7.Services
             }
 
             var monthName = _localizationService.GetGreekMonthName(DateTime.Now);
-            AddToParagraph(paragraph, $"σήμερα στις .................................... (      ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα ................................ και ώρα ........," +
+            AddToParagraph(paragraph, $"σήμερα στις .................................... (      ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι έξι (2026), ημέρα ................................ και ώρα ........," +
                 $" εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, {bailif}, μέλος της εταιρείας «{_companySettings.Name}», που εδρεύει στην Αθήνα, οδός {_companySettings.Address}, με Α.Φ.Μ. {_companySettings.TaxId}, νομίμως εκπροσωπούμενης, κατόπιν της έγγραφης παραγγελίας {notary}" +
                 $", ως επί του πλειστηριασμού υπαλλήλου,");
             return doc;
@@ -368,7 +368,7 @@ namespace WordManipulationDotNet7.Services
             paragraph.Alignment = Alignment.both;
 
             var monthName = _localizationService.GetGreekMonthName(DateTime.Now);
-            AddToParagraph(paragraph, $"{Location}, σήμερα στις .................................... (      ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα ................................ και ώρα ........," +
+            AddToParagraph(paragraph, $"{Location}, σήμερα στις .................................... (      ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι έξι (2026), ημέρα ................................ και ώρα ........," +
                     $" εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, ......................................................., μέλος της εταιρείας «{_companySettings.Name}», που εδρεύει στην Αθήνα, οδός {_companySettings.Address}, με Α.Φ.Μ. {_companySettings.TaxId}, νομίμως εκπροσωπούμενης," +
                     $" κατόπιν της έγγραφης παραγγελίας της δικηγόρου Ναυπλίου ");
             AddtoParagraphWithUnderlineText(paragraph, $"Ευαγγελίας Ξυπνητού,");
@@ -541,7 +541,7 @@ namespace WordManipulationDotNet7.Services
             }
 
             var monthName = _localizationService.GetGreekMonthName(DateTime.Now);
-            AddToParagraph(introParagraph, $"(     ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι πέντε (2025), ημέρα .......................................... και ώρα ........");
+            AddToParagraph(introParagraph, $"(     ) του μηνός {monthName} του έτους δύο χιλιάδες είκοσι έξι (2026), ημέρα .......................................... και ώρα ........");
             AddToParagraph(introParagraph, $", εγώ η δικαστική επιμελήτρια του Εφετείου Αθηνών, .........................................................................., μέλος της εταιρείας «{_companySettings.Name}», που εδρεύει στην Αθήνα, οδός {_companySettings.Address}, με Α.Φ.Μ. {_companySettings.TaxId}, νομίμως εκπροσωπούμενης, μετά την έγγραφη παραγγελία ");
             AddToParagraph(introParagraph, "που μου δόθηκε στις ");
             AddToParagraphBoldText(introParagraph, DateOfOrder);
